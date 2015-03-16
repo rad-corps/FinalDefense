@@ -5,7 +5,7 @@
 // For AIE Advanced Diploma - Game Development Using CPP
 /////////////////////////////////////////////////////////////////////////
 
-#include "AIE.h"
+#include "GLAHGraphics.h"
 #include "FrameworkHelpers.h"
 #include "Player.h"
 #include "CONSTS.H"
@@ -99,8 +99,8 @@ void Player::SetControlScheme(CONTROL_SCHEME_DEFINIITIONS controlScheme)
 	this->controlScheme = controlScheme;
 }
 
-float Player::X(){ return pos.GetX(); }
-float Player::Y(){ return pos.GetY(); }
+float Player::X(){ return pos.x; }
+float Player::Y(){ return pos.y; }
 
 float* Player::XPtr(){ return pos.XPtr(); }
 float* Player::YPtr(){ return pos.YPtr(); }
@@ -113,14 +113,14 @@ void Player::SetMovementKeys( unsigned int moveLeft, unsigned int moveRight ) { 
 int Player::GetLeftZoneEdge(){ return PLAYER_WIDTH / 2; }
 int Player::GetRightZoneEdge(){ return SCREEN_WIDTH - (PLAYER_WIDTH / 2); }
 
-void Player::Accellerate(Vector2D& accel)
+void Player::Accellerate(Vector2& accel)
 {
 	velocity += accel;
 }
 
 void Player::ApplyFriction()
 {
-	velocity.SetLength(velocity.GetLength() * dm.GetValueFloat(0, "FRICTION") );
+	velocity.SetMagnitude(velocity.GetMagnitude() * dm.GetValueFloat(0, "FRICTION") );
 }
 
 Bullet& Player::GetInactiveBullet()
@@ -138,14 +138,14 @@ Bullet& Player::GetInactiveBullet()
 void
 Player::CheckPlayerBounds()
 {
-	if ( pos.GetX() < (float)GetLeftZoneEdge() )
-		pos.SetX((float)GetLeftZoneEdge());
-	if ( pos.GetX() > (float)GetRightZoneEdge() )
-		pos.SetX((float)GetRightZoneEdge());
-	if (pos.GetY() > (float)SCREEN_HEIGHT)
-		pos.SetY((float)SCREEN_HEIGHT);
-	if (pos.GetY() < 0.f)
-		pos.SetY(0.f);
+	if ( pos.x < (float)GetLeftZoneEdge() )
+		pos.x = ((float)GetLeftZoneEdge());
+	if ( pos.x > (float)GetRightZoneEdge() )
+		pos.x = ((float)GetRightZoneEdge());
+	if (pos.y > (float)SCREEN_HEIGHT)
+		pos.y = ((float)SCREEN_HEIGHT);
+	if (pos.y < 0.f)
+		pos.y = (0.f);
 }
 
 //check collisions then move bullets
@@ -166,11 +166,12 @@ void Player::Shoot()
 {
 	//play sound
 	BASS_ChannelPlay(soundShot, true);
-	Vector2D gunDir, tempPos;
-	GetSpriteAngleVector(gun, gunDir);
-	tempPos = gunDir;
-	tempPos.SetLength(40.f);
-	GetInactiveBullet().InitialiseBullet(gunPos.GetX() + tempPos.GetX(), gunPos.GetY() + tempPos.GetY(), gunDir);
+	Vector2 gunDir, tempPos;
+	tempPos.SetAngle(GetGLAHEntity(gun).rotation);
+	//GetSpriteAngleVector(gun, gunDir);
+	//tempPos = gunDir;
+	tempPos.SetMagnitude(40.f);
+	GetInactiveBullet().InitialiseBullet(gunPos.x + tempPos.x, gunPos.y + tempPos.y, gunDir);
 	currentReloadBulletTime = 0.0f;
 	shotsFired++;
 }
@@ -182,8 +183,12 @@ Player::RotateShipAndWeapons()
 
 	if ( movementState == PLAYER_MOVEMENT_STATE::PLAYER_THRUSTING ) 
 	{
-		float dirRadians = GetRadiansFromVector(dir);
-		float targetRadians = GetRadiansFromVector(thrust);
+		//float dirRadians = GetRadiansFromVector(dir);
+		float dirRadians = dir.GetAngle();
+		
+		//float targetRadians = GetRadiansFromVector(thrust);
+		float targetRadians = thrust.GetAngle();
+
 		if ( dirRadians < 0 ) dirRadians += 2 * M_PI;
 		if ( targetRadians < 0 ) targetRadians += 2 * M_PI;
 
@@ -207,29 +212,31 @@ Player::RotateShipAndWeapons()
 		if ( cwDist > acwDist ) //anticlockwisw
 		{
 			if ( (acwDist) > ROTATION_TOLLERANCE )
-				RotateSprite(sprite, rot);
+				RotateSpriteRelative(sprite, rot);
 			else
-				RotateSpriteToVector(sprite, thrust);
+				RotateSprite(sprite, thrust.GetAngle());
 		}
 		else 
 		{
 			if ( (cwDist) > ROTATION_TOLLERANCE )
-				RotateSprite(sprite, -rot);
+				RotateSpriteRelative(sprite, -rot);
 			else
-				RotateSpriteToVector(sprite, thrust);
+				RotateSprite(sprite, thrust.GetAngle());
 		}
 	}
 
 	GetMouseLocation(mouseX, mouseY);
-	mouseVec = Vector2D((float)mouseX, -((float)mouseY - SCREEN_HEIGHT));
-	Vector2D direction = mouseVec - pos;
-	Vector2D shipDir = thrust;	
+
+	//TODO if Y is not inverted, comment this out. 
+	mouseVec = Vector2((float)mouseX, -((float)mouseY - SCREEN_HEIGHT));
+	Vector2 direction = mouseVec - pos;
+	Vector2 shipDir = thrust;	
 	direction.Normalise();	
 	shipDir.Normalise();	
-	RotateSpriteToVector(gun, direction);
+	RotateSprite(gun, direction.GetAngle());
 }
 
-void Player::SetThrust(Vector2D thrust)
+void Player::SetThrust(Vector2 thrust)
 {
 	this->thrust += thrust;
 	movementState = PLAYER_MOVEMENT_STATE::PLAYER_THRUSTING;
@@ -238,45 +245,46 @@ void Player::SetThrust(Vector2D thrust)
 void Player::HandleUserInput()
 {
 	//populate direction
-	GetSpriteAngleVector(sprite, dir);
+	//GetSpriteAngleVector(sprite, dir);
+	dir.SetAngle(GetGLAHEntity(sprite).rotation);
 
 	float rot  = dm.GetValueFloat(0, "ROTATION_SPEED");
 	if  (controlScheme == CONTROL_SCHEME_DEFINIITIONS::KEYBOARD_CONTROL)
 	{		
 		//handle user input
-		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_LEFT) )
+		if (IsKeyDown(SDLK_LSHIFT) && IsKeyDown(SDLK_LEFT) )
 			thrust += dir.Rotate90(false);
-		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_RIGHT) )
+		if (IsKeyDown(SDLK_LSHIFT) && IsKeyDown(SDLK_RIGHT) )
 			thrust += dir.Rotate90(true);
-		if ( (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_LEFT_SHIFT) ) || IsKeyDown(KEY_A)) {
+		if ( (IsKeyDown(SDLK_LEFT) && !IsKeyDown(SDLK_LSHIFT) ) || IsKeyDown(SDLK_a)) {
 			RotateSprite(sprite, rot);
 			RotateSprite(gun, rot);
 		}
-		if ( (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT_SHIFT) ) || IsKeyDown(KEY_D)) { 
+		if ( (IsKeyDown(SDLK_RIGHT) && !IsKeyDown(SDLK_LSHIFT) ) || IsKeyDown(SDLK_d)) { 
 			RotateSprite(sprite, -rot);
 			RotateSprite(gun, -rot);
 		}
-		if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
+		if (IsKeyDown(SDLK_DOWN) || IsKeyDown(SDLK_s))
 			thrust -= dir;
-		if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
+		if (IsKeyDown(SDLK_UP) || IsKeyDown(SDLK_w))
 			thrust += dir;
-		if (IsKeyDown(KEY_Q))
+		if (IsKeyDown(SDLK_q))
 			thrust += dir.Rotate90(false);
-		if (IsKeyDown(KEY_E))
+		if (IsKeyDown(SDLK_e))
 			thrust += dir.Rotate90(true);
-		if (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT))
+		if (IsKeyDown(SDLK_LALT) || IsKeyDown(SDLK_RALT))
 			if  (currentReloadBulletTime > GetFireRate())//bullet	
 				Shoot();
 	}
 	else if ( controlScheme == CONTROL_SCHEME_DEFINIITIONS::KEYBOARD_AND_MOUSE_CONTROL )
 	{
-		if (IsKeyDown(KEY_A))						
+		if (IsKeyDown(SDLK_a))						
 			SetThrust(left);
-		if (IsKeyDown(KEY_D))
+		if (IsKeyDown(SDLK_d))
 			SetThrust(right);
-		if ( IsKeyDown(KEY_S))
+		if ( IsKeyDown(SDLK_s))
 			SetThrust(down);
-		if (IsKeyDown(KEY_W))
+		if (IsKeyDown(SDLK_w))
 			SetThrust(up);
 		if ( GetMouseButtonDown(0)  )
 			if  (currentReloadBulletTime > GetFireRate())//bullet	
@@ -290,19 +298,19 @@ void Player::HandleUserInput()
 	
 	//avoid divide by 0
 	if ( thrust != neutral )
-		thrust.SetLength(dm.GetValueFloat(0, "THRUST_POWER"));
+		thrust.SetMagnitude(dm.GetValueFloat(0, "THRUST_POWER"));
 
 
 	
 	Accellerate(thrust); //this sets velocity
 	ApplyFriction();
 
-	if ( velocity.GetLength() > dm.GetValueFloat(0, "MAX_SPEED") ) 
-		velocity.SetLength(dm.GetValueFloat(0, "MAX_SPEED"));
+	if ( velocity.GetMagnitude() > dm.GetValueFloat(0, "MAX_SPEED") ) 
+		velocity.SetMagnitude(dm.GetValueFloat(0, "MAX_SPEED"));
 
 	AdjustEnginePitch();
 
-	//Vector2D scaledVec = velocity * GetDeltaTime();
+	//Vector2 scaledVec = velocity * GetDeltaTime();
 	//pos += scaledVec;
 	pos += velocity;
 }
@@ -317,13 +325,13 @@ void Player::AdjustEnginePitch()
 	float currentVelocity = 0.0f;
 	
 	//we dont want to alter pitch lower than velocity floor
-	if ( velocity.GetLength() < velocityFloor )
+	if ( velocity.GetMagnitude() < velocityFloor )
 	{
 		currentVelocity = velocityFloor;
 	}
 	else
 	{
-		currentVelocity = velocity.GetLength();
+		currentVelocity = velocity.GetMagnitude();
 	}
 
 	float pitchMultiplyer = currentVelocity * soundMulti;
@@ -361,8 +369,8 @@ void Player::Die()
 		timeSinceDeath = 0.f;
 		--powerUpFireRateMulti;
 		//bulletReloadTime = MAX_BULLET_RELOAD_TIME;
-		velocity.SetX(0.f);
-		velocity.SetY(0.f);
+		velocity.x =(0.f);
+		velocity.y =(0.f);
 	}
 }
 
@@ -381,11 +389,11 @@ float Player::GetFireRate()
 void Player::SetGunPos()
 {	
 	//get normalised player direction
-	Vector2D tempPos = dir;
+	Vector2 tempPos = dir;
 	tempPos.Normalise();
-	tempPos.SetLength(13.f);
-	gunPos.SetX(pos.GetX() - tempPos.GetX());
-	gunPos.SetY(pos.GetY() - tempPos.GetY());
+	tempPos.SetMagnitude(13.f);
+	gunPos.x = (pos.x - tempPos.x);
+	gunPos.y = (pos.y - tempPos.y);
 }
 
 //Checks for and handles user input
@@ -436,8 +444,8 @@ void Player::UpdatePlayer()
 	{
 		if ( AnimateDeath() )	//animation complete
 		{
-			pos.SetX(GetPlayerStartX());
-			pos.SetY(GetPlayerStartY());
+			pos.x = (GetPlayerStartX());
+			pos.y = (GetPlayerStartY());
 		}
 	}
 }
@@ -447,8 +455,8 @@ void Player::Draw()
 	if  (!tableLoaded)
 		return;
 
-	MoveSprite( currentSprite, pos.GetX(), pos.GetY() );
-	MoveSprite( gun, gunPos.GetX(), gunPos.GetY());	
+	MoveSprite( currentSprite, pos.x, pos.y );
+	MoveSprite( gun, gunPos.x, gunPos.y);	
 	DrawSprite( currentSprite );				
 	
 	//gun was still appearing after death, bugfix. 

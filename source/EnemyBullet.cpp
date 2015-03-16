@@ -56,15 +56,15 @@ void EnemyBullet::Update()
 }
 
 void 
-EnemyBullet::InitialiseBullet(float x, float y, Vector2D dir)
+EnemyBullet::InitialiseBullet(float x, float y, Vector2 dir)
 {
 	this->dir = dir;
-	RotateSpriteToVector(sprite, dir);
+	RotateSprite(sprite, dir.GetAngle());
 	this->x = x;
 	this->y = y;
 
-	this->velocityX = dir.GetX() * ENEMY_BULLET_VELOCITY;
-	this->velocityY = dir.GetY() * ENEMY_BULLET_VELOCITY;
+	this->velocityX = dir.x * ENEMY_BULLET_VELOCITY;
+	this->velocityY = dir.y * ENEMY_BULLET_VELOCITY;
 
 	isActive = true;
 }

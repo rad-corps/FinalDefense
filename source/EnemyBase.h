@@ -8,9 +8,9 @@
 #pragma once
 
 //#include "Player.h"
-#include "AIE.h"
+#include "GLAHGraphics.h"
 #include "CONSTS.H"
-#include "Vector2D.h"
+#include "Vector.h"
 #include "EnemyBullet.h"
 #include <vector>
 #include "bass.h"
@@ -28,9 +28,9 @@ public:
 	//player -- need this to check collisions
 	//spawnTime -- what time (in seconds) do we spawn this enemy at? 
 	//EnemyBase(Player* player, const float& spawnAt, const int& health);
-	EnemyBase(const float& spawnTime, const int& health, const Vector2D& pos, float* plyrX, float* plyrY);
+	EnemyBase(const float& spawnTime, const int& health, const Vector2& pos, float* plyrX, float* plyrY);
 	virtual void Move(const float& plyrX, const float& plyrY, bool playerAlive) = 0; //must be defined by derived class
-	void MoveAway(Vector2D& velocity);
+	void MoveAway(Vector2& velocity);
 	float X();
 	float Y();
 	bool Alive();//return false if health <= 0
@@ -52,12 +52,12 @@ public:
 	static void ResetBullets();
 
 protected: 
-	void SetDeathFrames(unsigned int* deathAnimation); //to be called by derived class
+	void SetDeathFrames(SDL_Texture** deathAnimation); //to be called by derived class
 	float AngleToPlayer(const float& plyrX, const float& plyrY);
 	float DistanceToPlayer(const float& plyrX, const float& plyrY);
-	unsigned int sprite;
-	unsigned int deathAnimations[DEATH_ANIMATION_FRAMES];//constraint: all enemies must have DEATH_ANIMATION_FRAMES death frames
-	Vector2D pos;
+	SDL_Texture* sprite;
+	SDL_Texture* deathAnimations[DEATH_ANIMATION_FRAMES];//constraint: all enemies must have DEATH_ANIMATION_FRAMES death frames
+	Vector2 pos;
 	
 	float *plyrX, *plyrY;
 

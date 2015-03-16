@@ -7,8 +7,9 @@
 
 #pragma once 
 
-#include "AIE.h"
-#include "Vector2D.h"
+#include "GLAHGraphics.h"
+#include "Vector.h"
+#include "SDL2/SDL.h"
 
 class Bullet
 {
@@ -21,7 +22,7 @@ public:
 
 	void Update(float delta);
 	void Draw();
-	void InitialiseBullet(float x, float y, Vector2D dir);
+	void InitialiseBullet(float x, float y, Vector2 dir);
 	void UninitialiseBullet();
 	bool Active();
 	bool Missed();
@@ -32,11 +33,11 @@ private:
 	float width;
 	float height; 
 
-	unsigned int sprite;
+	SDL_Texture* sprite;
 
 	float velocityX;
 	float velocityY;
-	Vector2D dir;
+	Vector2 dir;
 	bool isActive;
 	bool missed;
 };

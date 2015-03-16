@@ -235,36 +235,36 @@ LevelBase::GetNextEnemyList()
 }
 
 
-Vector2D LevelBase::CreateSpawnPointTop()
+Vector2 LevelBase::CreateSpawnPointTop()
 {
 	float rand = RandomPercentage();
-	Vector2D startingPos;
-	startingPos.SetX(rand * SCREEN_WIDTH);
-	startingPos.SetY(SCREEN_HEIGHT + 100);
+	Vector2 startingPos;
+	startingPos.x=(rand * SCREEN_WIDTH);
+	startingPos.y=(SCREEN_HEIGHT + 100);
 	return startingPos;
 }
-Vector2D LevelBase::CreateSpawnPointLeft()
+Vector2 LevelBase::CreateSpawnPointLeft()
 {
 	float rand = RandomPercentage();
-	Vector2D startingPos;
-	startingPos.SetX(-100);
-	startingPos.SetY(SCREEN_HEIGHT * rand);
+	Vector2 startingPos;
+	startingPos.x=(-100);
+	startingPos.y=(SCREEN_HEIGHT * rand);
 	return startingPos;
 }
-Vector2D LevelBase::CreateSpawnPointRight()
+Vector2 LevelBase::CreateSpawnPointRight()
 {
 	float rand = RandomPercentage();
-	Vector2D startingPos;
-	startingPos.SetX(SCREEN_WIDTH + 100);
-	startingPos.SetY(SCREEN_HEIGHT * rand);
+	Vector2 startingPos;
+	startingPos.x=(SCREEN_WIDTH + 100);
+	startingPos.y=(SCREEN_HEIGHT * rand);
 	return startingPos;
 }
-Vector2D LevelBase::CreateSpawnPointBottom()
+Vector2 LevelBase::CreateSpawnPointBottom()
 {
 	float rand = RandomPercentage();
-	Vector2D startingPos;
-	startingPos.SetX(rand * SCREEN_WIDTH);
-	startingPos.SetY(-100.f);
+	Vector2 startingPos;
+	startingPos.x=(rand * SCREEN_WIDTH);
+	startingPos.y=(-100.f);
 	return startingPos;
 }
 
@@ -274,7 +274,7 @@ LevelBase::CreateEnemy(ENEMY_TYPE enemyType, ENEMY_SPAWN_POINTS spawnPoint, floa
 {
 	float rand = RandomPercentage();
 	float rand2 = RandomPercentage();
-	Vector2D startingPos;
+	Vector2 startingPos;
 
 	if ( spawnPoint == ENEMY_SPAWN_POINTS::BOTTOM ) 
 	{
@@ -339,17 +339,17 @@ LevelBase::CreateEnemy(ENEMY_TYPE enemyType, ENEMY_SPAWN_POINTS spawnPoint, floa
 
 void LevelBase::CreatePowerUp(POWER_UP_TYPES powerUpType, ENEMY_SPAWN_POINTS spawnPoint, float spawnTime) //a helper function to create a power up
 {
-	Vector2D startingPos;
+	Vector2 startingPos;
 
 	if ( spawnPoint == ENEMY_SPAWN_POINTS::BOTTOM ) 
 	{
-		startingPos.SetX(SCREEN_WIDTH/2);
-		startingPos.SetY(-100.f);
+		startingPos.x=(SCREEN_WIDTH/2);
+		startingPos.y=(-100.f);
 	}
 	else if ( spawnPoint == ENEMY_SPAWN_POINTS::TOP )
 	{
-		startingPos.SetX(SCREEN_WIDTH/2);
-		startingPos.SetY(SCREEN_HEIGHT + 100.f);
+		startingPos.x=(SCREEN_WIDTH/2);
+		startingPos.y=(SCREEN_HEIGHT + 100.f);
 	}
 
 	//create powerup

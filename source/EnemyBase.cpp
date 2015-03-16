@@ -17,7 +17,7 @@ vector<EnemyBulletPtr> EnemyBase::bullets;
 //EnemyBase(Player* player, float spawnAt);
 //spawnAt -- what time (in seconds) do we spawn this enemy at? 
 //EnemyBase::EnemyBase(Player* player, const float& spawnAt, const int& health)	
-EnemyBase::EnemyBase(const float& spawnTime, const int& health, const Vector2D& pos, float* plyrX, float* plyrY)	
+EnemyBase::EnemyBase(const float& spawnTime, const int& health, const Vector2& pos, float* plyrX, float* plyrY)	
 {
 	this->spawnTime = spawnTime;
 	this->health = health;
@@ -49,29 +49,29 @@ EnemyBase::EnemyBase(const float& spawnTime, const int& health, const Vector2D& 
 	}
 }
 
-void EnemyBase::MoveAway(Vector2D& velocity)
+void EnemyBase::MoveAway(Vector2& velocity)
 {
-	Vector2D direction = Vector2D(*plyrX, *plyrY) - pos;
+	Vector2 direction = Vector2(*plyrX, *plyrY) - pos;
 	direction.Normalise();
 
-	direction.SetX(-direction.GetX());
-	direction.SetY(-direction.GetY());
+	direction.x=(-direction.x);
+	direction.y=(-direction.y);
 
 	velocity += direction * ENEMY_FORCE_MOVE_AWAY;
-	if ( velocity.GetLength() > maxSpeed ) 	
-		velocity.SetLength(maxSpeed);
-	//Vector2D scaledVelocity = velocity * GetDeltaTime();
+	if ( velocity.GetMagnitude() > maxSpeed ) 	
+		velocity.SetMagnitude(maxSpeed);
+	//Vector2 scaledVelocity = velocity * GetDeltaTime();
 	pos += velocity;
 }
 
 float EnemyBase::X()
 {
-	return pos.GetX();
+	return pos.x;
 }
 
 float EnemyBase::Y()
 {
-	return pos.GetY();
+	return pos.y;
 }
 
 bool EnemyBase::Alive()
@@ -131,14 +131,14 @@ bool EnemyBase::AnimateDeath()
 //	//dont process anything if enemy is not alive or has not spawned
 //	if  ( Alive() )
 //	{
-//		float d = sqrt(pow(x - player->GetX(), 2) + pow(y - player->GetY(), 2));
+//		float d = sqrt(pow(x - player->x, 2) + pow(y - player->y, 2));
 //		if ( d < player->GetPlayerWidth() )
 //			return true;		
 //	}//if ( Alive() )		
 //	
 //	return false;
 //}
-void EnemyBase::SetDeathFrames(unsigned int* deathAnimation)
+void EnemyBase::SetDeathFrames(SDL_Texture** deathAnimation)
 {
 	for (int i = 0; i < DEATH_ANIMATION_FRAMES; ++i )
 	{
@@ -173,7 +173,7 @@ void EnemyBase::Draw(const float& plyrX, const float& plyrY)
 			if ( Alive() )
 			{
 				MoveSprite(sprite, X(), Y());	
-				RotateSpriteToAngle(sprite, AngleToPlayer(plyrX, plyrY));
+				RotateSprite(sprite, AngleToPlayer(plyrX, plyrY));
 				DrawSprite(sprite);	
 			}
 			else 
@@ -256,9 +256,10 @@ void EnemyBase::ResetBullets()
 
 void EnemyBase::Shoot()
 {
-	Vector2D dir;
-	GetSpriteAngleVector(sprite, dir);
-	EnemyBase::GetInactiveBullet()->InitialiseBullet(pos.GetX(), pos.GetY(), dir);
+	Vector2 dir;
+	//GetSpriteAngleVector(sprite, dir);
+	dir.SetAngle(GetGLAHEntity(sprite).rotation);
+	EnemyBase::GetInactiveBullet()->InitialiseBullet(pos.x, pos.y, dir);
 	BASS_ChannelPlay(soundLaser, true);
 }
 

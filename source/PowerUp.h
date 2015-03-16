@@ -8,13 +8,14 @@
 #pragma once
 
 #include "CONSTS.H"
-#include "Vector2D.h"
+#include "Vector.h"
+#include "SDL2/SDL.h"
 
 
 class PowerUp
 {
 public:
-	PowerUp(const float& spawnTime, POWER_UP_TYPES powerUpType, ENEMY_SPAWN_POINTS spawnPoint, Vector2D startPos);
+	PowerUp(const float& spawnTime, POWER_UP_TYPES powerUpType, ENEMY_SPAWN_POINTS spawnPoint, Vector2 startPos);
 	~PowerUp();
 
 	void Draw();
@@ -36,12 +37,12 @@ public:
 private:
 	POWER_UP_TYPES powerUpType;
 	ENEMY_SPAWN_POINTS spawnPoint;
-	Vector2D pos;
+	Vector2 pos;
 	float angle;
 
-	unsigned int spriteFrame1;
-	unsigned int spriteFrame2;
-	unsigned int currentSprite;
+	SDL_Texture* spriteFrame1;
+	SDL_Texture* spriteFrame2;
+	SDL_Texture* currentSprite;
 	bool throwOut;
 	bool hasSpawned;
 	float spawnTime;

@@ -61,11 +61,11 @@
       <AdditionalIncludeDirectories>./;./include/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>NotSet</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(OutDir)$(ProjectName)_d.exe</OutputFile>
       <AdditionalLibraryDirectories>./libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>bass.lib;AIE_1st_Year_Framework_d.lib;kernel32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bass.lib;kernel32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>$(OutDir)$(ProjectName)_d.pdb</ProgramDatabaseFile>
       <LinkErrorReporting>QueueForNextLogin</LinkErrorReporting>
     </Link>
@@ -97,6 +97,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\GLAHGraphics.cpp" />
     <ClCompile Include="source\HighScoreFile.cpp" />
     <ClCompile Include="include\sqlite3.c" />
     <ClCompile Include="source\PauseMenu.cpp" />
@@ -115,12 +116,15 @@
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PowerUp.cpp" />
-    <ClCompile Include="source\Vector2D.cpp" />
     <ClCompile Include="source\SpawnPointGenerator.cpp" />
+    <ClCompile Include="source\Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\GLAHColour.h" />
+    <ClInclude Include="include\GLAHEntity.h" />
+    <ClInclude Include="include\GLAHGraphics.h" />
+    <ClInclude Include="include\InputListener.h" />
     <ClInclude Include="source\HighScoreFile.h" />
-    <ClInclude Include="include\AIE.h" />
     <ClInclude Include="include\bass.h" />
     <ClInclude Include="include\sqlite3.h" />
     <ClInclude Include="source\PauseMenu.h" />
@@ -140,8 +144,8 @@
     <ClInclude Include="source\LevelBase.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\PowerUp.h" />
-    <ClInclude Include="source\Vector2D.h" />
     <ClInclude Include="source\SpawnPointGenerator.h" />
+    <ClInclude Include="source\Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

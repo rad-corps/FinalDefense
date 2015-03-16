@@ -103,12 +103,12 @@ bool MainMenu::CheckSelection()
 {
 	bool selectionMade = false;
 	//do we change selection? 
-	if ((IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_UP)) && minTimeBetweenSelection > 0.2f)
+	if ((IsKeyDown(SDLK_DOWN) || IsKeyDown(SDLK_UP)) && minTimeBetweenSelection > 0.2f)
 	{
 		BASS_ChannelPlay(soundChangeSelection, true);
 		minTimeBetweenSelection = 0.f;
 		
-		if ( IsKeyDown(KEY_DOWN) )
+		if ( IsKeyDown(SDLK_DOWN) )
 		{
 			++menuSelection;
 			if ( menuSelection == menuSelections.end() )
@@ -116,7 +116,7 @@ bool MainMenu::CheckSelection()
 				menuSelection = menuSelections.begin();
 			}
 		}
-		if ( IsKeyDown(KEY_UP) )
+		if ( IsKeyDown(SDLK_UP) )
 		{
 			if ( menuSelection == menuSelections.begin() )
 			{
@@ -142,7 +142,7 @@ void MainMenu::CheckControlMethod()
 	//check if we want to change the control scheme
 	if ( *menuSelection == MENU_SELECTION::CONTROL_SCHEME )
 	{
-		if ( (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_RIGHT)) && minTimeBetweenSelection > 0.2f )
+		if ( (IsKeyDown(SDLK_LEFT) || IsKeyDown(SDLK_RIGHT)) && minTimeBetweenSelection > 0.2f )
 		{
 			BASS_ChannelPlay(soundChangeSelection, true);
 			minTimeBetweenSelection = 0.f;
@@ -267,7 +267,7 @@ void MainMenu::DrawHighScores()
 GAMESTATES
 MainMenu::Update()
 {
-	if ( IsKeyDown( KEY_M ) )
+	if ( IsKeyDown( SDLK_m ) )
 	{
 		ReloadData();
 	}
@@ -285,7 +285,7 @@ MainMenu::Update()
 
 	if ( *menuSelection == MENU_SELECTION::QUIT )
 	{
-		if ( IsKeyDown(KEY_ENTER)  && minTimeBetweenSelection > 0.2f )
+		if ( IsKeyDown(SDLK_RETURN)  && minTimeBetweenSelection > 0.2f )
 		{
 			BASS_ChannelPlay(soundChangeSelection, true);
 			minTimeBetweenSelection = 0.f;
@@ -347,7 +347,7 @@ MainMenu::Update()
 
 	if ( minTimeBetweenSelection > 0.2f )
 	{
-		if( IsKeyDown( KEY_ENTER ) && *menuSelection == MENU_SELECTION::START_GAME )
+		if( IsKeyDown( SDLK_RETURN ) && *menuSelection == MENU_SELECTION::START_GAME )
 		{
 			BASS_ChannelPlay(soundConfirmSelection, true);
 			return GAMESTATES::GAMEPLAY;

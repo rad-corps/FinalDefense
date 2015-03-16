@@ -52,7 +52,7 @@ GameController::FrameworkInit()
 	//INITIALISE AIE FRAMEWORK AND WINDOW
 	Initialise( SCREEN_WIDTH, SCREEN_HEIGHT, false, "Geowarp" );
 	
-	SetBackgroundColour( BG_COLOUR );
+	//SetBackgroundColour( BG_COLOUR );
 	AddFont( INVADERS_FONT );
 	AddFont( NUMBERS_FONT );
 
@@ -127,7 +127,7 @@ void GameController::GameLoop()
 			UpdateGameState();	
 
 			//do we want to escape to main menu? 
-			if( IsKeyDown( KEY_ESCAPE ) ) {
+			if( IsKeyDown( SDLK_ESCAPE ) ) {
 				//currentLevel->PauseGameSound();
 				BASS_ChannelPause(soundCurrentLevel);
 				currentState = ShowPauseScreen();
@@ -156,11 +156,11 @@ GAMESTATES GameController::ShowPauseScreen()
 	//MoveSprite(pauseScreenSprite, 0, SCREEN_HEIGHT);
 	//DrawSprite(pauseScreenSprite);
 
-	if ( IsKeyDown(KEY_Q) )
+	if ( IsKeyDown(SDLK_q) )
 	{
 		return GAMESTATES::MAIN_MENU;
 	}
-	else if ( IsKeyDown(KEY_ENTER) )
+	else if ( IsKeyDown(SDLK_RETURN) )
 	{
 		return GAMESTATES::GAMEPLAY;
 	}
@@ -209,11 +209,11 @@ GameController::UpdateGameState()
 		currentLevel->CreateNextWave();
 	}
 
-	if ( IsKeyDown( KEY_H ) )
+	if ( IsKeyDown( SDLK_h ) )
 	{
 		hud->ReloadData();
 	}
-	if ( IsKeyDown( KEY_P ) )
+	if ( IsKeyDown( SDLK_p ) )
 	{
 		player->ReloadData();
 	}

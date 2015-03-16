@@ -1,10 +1,10 @@
 #include "PowerUp.h"
 #include <string>
-#include "AIE.h"
+#include "GLAHGraphics.h"
 #include <cmath>
 #include <iostream>
 
-PowerUp::PowerUp(const float& spawnTime, POWER_UP_TYPES powerUpType, ENEMY_SPAWN_POINTS spawnPoint, Vector2D startPos)
+PowerUp::PowerUp(const float& spawnTime, POWER_UP_TYPES powerUpType, ENEMY_SPAWN_POINTS spawnPoint, Vector2 startPos)
 {
 	this->pos = startPos;
 	this->spawnPoint = spawnPoint;
@@ -51,11 +51,11 @@ PowerUp::~PowerUp()
 //X/Y Getters
 float PowerUp::X()
 {
-	return pos.GetX();
+	return pos.x;
 }
 float PowerUp::Y()
 {
-	return pos.GetY();
+	return pos.y;
 }
 
 void PowerUp::Draw()
@@ -71,7 +71,7 @@ void PowerUp::Draw()
 				currentSprite = spriteFrame1;
 			timer = 0.0f;
 		}
-		MoveSprite(currentSprite, pos.GetX(), pos.GetY());
+		MoveSprite(currentSprite, pos.x, pos.y);
 		DrawSprite(currentSprite);
 	}
 }
@@ -83,18 +83,18 @@ void PowerUp::Move(const float& plyrX, const float& plyrY, bool playerAlive)
 	{
 		//calculate xpos
 		angle += POWERUP_SINE_SPEED;
-		float xpos = (sin(angle) * POWERUP_SINE_DEPTH) + pos.GetX();
+		float xpos = (sin(angle) * POWERUP_SINE_DEPTH) + pos.x;
 
 		//calculate ypos	
-		float ypos = pos.GetY();
+		float ypos = pos.y;
 		if ( spawnPoint == ENEMY_SPAWN_POINTS::TOP )
 			ypos += POWERUP_Y_SPEED;
 		if ( spawnPoint == ENEMY_SPAWN_POINTS::BOTTOM )
 			ypos -= POWERUP_Y_SPEED;
 
 		//set positions
-		pos.SetX( xpos );
-		pos.SetY( ypos );
+		pos.x =  xpos ;
+		pos.y =  ypos ;
 	}
 }
 

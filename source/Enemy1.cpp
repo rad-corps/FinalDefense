@@ -12,7 +12,7 @@
 #include "FrameworkHelpers.h"
 
 //Enemy1::Enemy1(Player* player, const float& spawnAt) : EnemyBase(player,spawnAt,10)
-Enemy1::Enemy1(float* plyrX, float* plyrY, const float& spawnTime, const Vector2D& pos) : EnemyBase(spawnTime,10, pos, plyrX, plyrY)
+Enemy1::Enemy1(float* plyrX, float* plyrY, const float& spawnTime, const Vector2& pos) : EnemyBase(spawnTime,10, pos, plyrX, plyrY)
 {
 	sprite = CreateSprite("./images/PNG/Enemies/enemyBlack1.png", ENEMYSINE_WIDTH, ENEMYSINE_HEIGHT, true);
 	frameCount = 0;
@@ -40,19 +40,19 @@ Enemy1::Move(const float& plyrX, const float& plyrY, bool playerAlive)
 void
 Enemy1::GravitateToPlayer(const float& plyrX, const float& plyrY, bool playerAlive)
 {
-	Vector2D direction = Vector2D(plyrX, plyrY) - pos;
+	Vector2 direction = Vector2(plyrX, plyrY) - pos;
 	direction.Normalise();
 
 	if (!playerAlive)
 	{
-		direction.SetX(-direction.GetX());
-		direction.SetY(-direction.GetY());
+		direction.x=(-direction.x);
+		direction.y=(-direction.y);
 	}
 
 	velocity += direction * (DistanceToPlayer(plyrX, plyrY) * ENEMY1_FORCE_MULTIPLIER);
-	if ( velocity.GetLength() > maxSpeed ) 	
-		velocity.SetLength(maxSpeed);
-	//Vector2D scaledVelocity = velocity * GetDeltaTime();
+	if ( velocity.GetMagnitude() > maxSpeed ) 	
+		velocity.SetMagnitude(maxSpeed);
+	//Vector2 scaledVelocity = velocity * GetDeltaTime();
 	pos += velocity;
 }
 

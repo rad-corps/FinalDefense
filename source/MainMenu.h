@@ -12,6 +12,7 @@
 #include <vector>
 #include "DatabaseManager.h"
 #include "HighScoreFile.h"
+#include "SDL2/SDL.h"
 
 
 class MainMenu
@@ -52,11 +53,11 @@ private:
 	SColour inactiveMenuItemColour;
 	float minTimeBetweenSelection;
 	CONTROL_SCHEME_DEFINIITIONS myControlScheme;
-	unsigned int mainMenuSprite;
-	unsigned int kbmouseSprite;
-	unsigned int retroSprite;	
-	unsigned int creditsSprite;
-	unsigned int startScreen;
+	SDL_Texture* mainMenuSprite;
+	SDL_Texture* kbmouseSprite;
+	SDL_Texture* retroSprite;	
+	SDL_Texture* creditsSprite;
+	SDL_Texture* startScreen;
 
 	HSTREAM soundChangeSelection;
 	HSTREAM soundConfirmSelection;

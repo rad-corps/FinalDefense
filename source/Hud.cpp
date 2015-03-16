@@ -9,7 +9,7 @@
 #include <string>
 #include "FrameworkHelpers.h"
 #include "DatabaseManager.h"
-#include "AIE.h"
+#include "GLAHGraphics.h"
 #include <iostream>
 
 Hud::Hud(){	
@@ -61,8 +61,9 @@ Hud::InputHighScoreName()
 	
 	timer += GetDeltaTime();	
 
-	for ( int i = KEY_A; i <= KEY_Z; ++i )
+	for ( int i = SDLK_a; i <= SDLK_z; ++i )
 	{
+		
 		if ( IsKeyDown(i) && timer > dm.GetValueFloat(0, "CHAR_ENTRY_TIMER"))
 		{
 			if ( name.size() < 3 ) 
@@ -72,13 +73,13 @@ Hud::InputHighScoreName()
 			}
 		}
 	}
-	if ( IsKeyDown(KEY_BACKSPACE) && timer > dm.GetValueFloat(0, "CHAR_ENTRY_TIMER"))
+	if ( IsKeyDown(SDLK_BACKSPACE) && timer > dm.GetValueFloat(0, "CHAR_ENTRY_TIMER"))
 	{
 		timer = 0.0f;
 		if ( name.size() > 0 )
 			name.pop_back();
 	}
-	if ( IsKeyDown(KEY_ENTER) && !scoreSubmitted )
+	if ( IsKeyDown(SDLK_RETURN) && !scoreSubmitted )
 	{
 		timer = 0.0f;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector2D.h"
+#include "Vector.h"
 #include "CONSTS.h"
 
 class SpawnPointGenerator
@@ -9,6 +9,6 @@ public:
 	SpawnPointGenerator();
 	~SpawnPointGenerator();
 
-	Vector2D Generate(ENEMY_SPAWN_POINTS point, int widthMargin, int heightMargin);
+	Vector2 Generate(ENEMY_SPAWN_POINTS point, int widthMargin, int heightMargin);
 };
 

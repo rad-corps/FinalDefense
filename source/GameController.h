@@ -6,7 +6,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "AIE.h"
+#include "GLAHGraphics.h"
 #include "EnemyBase.h"
 #include "Player.h"
 #include "CONSTS.h"

@@ -18,9 +18,6 @@
     <ClCompile Include="source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Vector2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,15 +72,18 @@
     <ClCompile Include="source\HighScoreFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\GLAHGraphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Vector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\CONSTS.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\bullet.h">
@@ -119,9 +119,6 @@
     <ClInclude Include="include\bass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AIE.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\Hud.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -144,6 +141,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\HighScoreFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GLAHGraphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GLAHColour.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GLAHEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InputListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -34,8 +34,8 @@ private:
 
 	bool tableLoaded;
 
-	unsigned int hudLives[MAX_LIVES]; //5 is max num of lives
-	unsigned int hudWaves[MAX_WAVES];
+	SDL_Texture* hudLives[MAX_LIVES]; //5 is max num of lives
+	SDL_Texture* hudWaves[MAX_WAVES];
 	HudInfo info;
 	string name;
 	float timer;

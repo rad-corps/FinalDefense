@@ -6,7 +6,9 @@ Bullet::Bullet()
 {
 	isActive = false;
 	missed = false;
-	sprite = CreateSprite( "./images/PNG/Lasers/laserBlue01.png", BULLET_WIDTH, BULLET_HEIGHT, true );
+	
+	//TODO Draw from centre
+	sprite = CreateSprite( "./images/PNG/Lasers/laserBlue01.png", BULLET_WIDTH, BULLET_HEIGHT);
 }
 
 Bullet::~Bullet()
@@ -61,15 +63,15 @@ Bullet::Missed()
 }
 
 void 
-Bullet::InitialiseBullet(float x, float y, Vector2D dir)
+Bullet::InitialiseBullet(float x, float y, Vector2 dir)
 {
 	this->dir = dir;
-	RotateSpriteToVector(sprite, dir);
+	RotateSprite(sprite, dir.GetAngle());
 	this->x = x;
 	this->y = y;
 
-	this->velocityX = dir.GetX() * PLAYER_BULLET_VELOCITY;
-	this->velocityY = dir.GetY() * PLAYER_BULLET_VELOCITY;
+	this->velocityX = dir.x * PLAYER_BULLET_VELOCITY;
+	this->velocityY = dir.y * PLAYER_BULLET_VELOCITY;
 
 	isActive = true;
 }

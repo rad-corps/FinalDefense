@@ -2,6 +2,7 @@
 
 #include "CONSTS.H"
 #include "DatabaseManager.h"
+#include "SDL2/SDL.h"
 
 enum PAUSE_MENU_OPTIONS
 {
@@ -19,7 +20,7 @@ public:
 	void Draw();
 
 private:
-	unsigned int pauseMenuSprite;
+	SDL_Texture* pauseMenuSprite;
 	DatabaseManager dm;
 	PAUSE_MENU_OPTIONS activePauseMenuOption;
 

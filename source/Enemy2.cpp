@@ -12,7 +12,7 @@
 #include "FrameworkHelpers.h"
 
 //Enemy1::Enemy1(Player* player, const float& spawnAt) : EnemyBase(player,spawnAt,10)
-Enemy2::Enemy2(float* plyrX, float* plyrY,const float& spawnTime, const Vector2D& pos) : EnemyBase(spawnTime,10, pos, plyrX, plyrY)
+Enemy2::Enemy2(float* plyrX, float* plyrY,const float& spawnTime, const Vector2& pos) : EnemyBase(spawnTime,10, pos, plyrX, plyrY)
 {
 	sprite = CreateSprite("./images/PNG/Enemies/enemyRed2.png", ENEMYSINE_WIDTH, ENEMYSINE_HEIGHT, true);
 	frameCount = 0;
@@ -38,7 +38,8 @@ Enemy2::Move(const float& plyrX, const float& plyrY, bool playerAlive)
 		}
 
 		MoveSprite(sprite, X(), Y());	
-		RotateSpriteToAngle(sprite, AngleToPlayer(plyrX, plyrY));
+		//RotateSpriteToAngle(sprite, AngleToPlayer(plyrX, plyrY));
+		RotateSprite(sprite, AngleToPlayer(plyrX, plyrY));
 	}
 }
 
@@ -59,20 +60,20 @@ Enemy2::RandomiseShoot()
 void
 Enemy2::GravitateToPlayer(const float& plyrX, const float& plyrY, bool playerAlive)
 {
-	Vector2D direction = Vector2D(plyrX, plyrY) - pos;
+	Vector2 direction = Vector2(plyrX, plyrY) - pos;
 	direction.Normalise();
 
 	if (!playerAlive)
 	{
-		direction.SetX(-direction.GetX());
-		direction.SetY(-direction.GetY());
+		direction.x=(-direction.x);
+		direction.y=(-direction.y);
 	}
 
 	float dist = DistanceToPlayer(plyrX, plyrY);
 	velocity += direction * (dist * dist * ENEMY2_FORCE_MULTIPLIER);
-	float magnitude = velocity.GetLength();
+	float magnitude = velocity.GetMagnitude();
 	if ( magnitude > maxSpeed ) 
-		velocity.SetLength(maxSpeed);
-	//Vector2D scaledVelocity = velocity * GetDeltaTime();
+		velocity.SetMagnitude(maxSpeed);
+	//Vector2 scaledVelocity = velocity * GetDeltaTime();
 	pos += velocity;
 }

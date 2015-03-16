@@ -58,14 +58,14 @@ protected:
 	float spawnInterval;
 	int currentWaveNum;
 private:
-	Vector2D CreateSpawnPointTop();
-	Vector2D CreateSpawnPointLeft();
-	Vector2D CreateSpawnPointRight();
-	Vector2D CreateSpawnPointBottom();
+	Vector2 CreateSpawnPointTop();
+	Vector2 CreateSpawnPointLeft();
+	Vector2 CreateSpawnPointRight();
+	Vector2 CreateSpawnPointBottom();
 
 	//background sprites
-	unsigned int gameBgSprite[3][3];
-	unsigned int gameBg2Sprite[3][3];
+	SDL_Texture* gameBgSprite[3][3];
+	SDL_Texture* gameBg2Sprite[3][3];
 	float bgYoffset;
 	float bgY2offset;
 	float bgY3offset;

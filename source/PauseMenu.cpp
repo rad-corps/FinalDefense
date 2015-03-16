@@ -21,26 +21,26 @@ PauseMenu::~PauseMenu()
 
 GAMESTATES PauseMenu::Update()
 {
-	if ( IsKeyDown(KEY_R) )
+	if ( IsKeyDown(SDLK_r) )
 	{
 		char * error = NULL;
 		dm.Select("Highscores.db", "PAUSE_MENU", "*", "", "", error);
 	}
-	if ( IsKeyDown(KEY_LEFT) )
+	if ( IsKeyDown(SDLK_LEFT) )
 	{
 		if ( activePauseMenuOption == PAUSE_OPTION_QUIT )
 		{
 			activePauseMenuOption = PAUSE_OPTION_RESUME;
 		}
 	}
-	if ( IsKeyDown(KEY_RIGHT) )
+	if ( IsKeyDown(SDLK_RIGHT) )
 	{
 		if ( activePauseMenuOption == PAUSE_OPTION_RESUME )
 		{
 			activePauseMenuOption = PAUSE_OPTION_QUIT;
 		}
 	}
-	if ( IsKeyDown(KEY_ENTER) )
+	if ( IsKeyDown(SDLK_RETURN) )
 	{
 		if ( activePauseMenuOption == PAUSE_OPTION_RESUME )
 		{

@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "AIE.h"
+#include "GLAHGraphics.h"
 #include <list>
 #include <memory> //shared_ptr (for whole project)
 #include <string>
@@ -19,7 +19,7 @@
 #define USE_DB_HIGH_SCORES
 
 
-#define M_PI 3.14159265358979323846f
+//#define M_PI 3.14159265358979323846f
 
 using namespace std;
 

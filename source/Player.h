@@ -7,12 +7,13 @@
 
 #pragma once
 
-#include "Vector2D.h"
+#include "Vector.h"
 #include "bullet.h"
 #include <list>
 #include "CONSTS.h"
 #include "bass.h"
 #include "DatabaseManager.h"
+#include "SDL2/SDL.h"
 
 
 enum PLAYER_MOVEMENT_STATE
@@ -86,13 +87,13 @@ public:
 private:
 	float GetFireRate();
 	PLAYER_MOVEMENT_STATE movementState;
-	void SetThrust(Vector2D thrust);
+	void SetThrust(Vector2 thrust);
 	void InitSprites();
 	void SetGunPos();
 	void AdjustEnginePitch();
 	//bool CheckCollision();
 	void CheckPlayerBounds();
-	void Accellerate(Vector2D& accel);
+	void Accellerate(Vector2& accel);
 	Bullet& GetInactiveBullet();
 	void Shoot();
 	float GetPlayerStartX();
@@ -107,16 +108,16 @@ private:
 
 
 	//player position and physics
-	Vector2D pos;
-	Vector2D gunPos;
-	Vector2D dir;
-	Vector2D thrust;
-	Vector2D velocity;
-	const Vector2D left;
-	const Vector2D right;
-	const Vector2D up;
-	const Vector2D down;
-	const Vector2D neutral;
+	Vector2 pos;
+	Vector2 gunPos;
+	Vector2 dir;
+	Vector2 thrust;
+	Vector2 velocity;
+	const Vector2 left;
+	const Vector2 right;
+	const Vector2 up;
+	const Vector2 down;
+	const Vector2 neutral;
 
 	//game rules
 	int lives;						//decremented each time the player collides with an enemy or bullet
@@ -140,11 +141,11 @@ private:
 
 
 	//SPRITES
-	unsigned int sprite;
-	unsigned int deathAnimations[7];
-	unsigned int currentSprite;
+	SDL_Texture* sprite;
+	SDL_Texture* deathAnimations[7];
+	SDL_Texture* currentSprite;
 	//unsigned int hudLives[MAX_LIVES]; //5 is max num of lives
-	unsigned int gun;
+	SDL_Texture* gun;
 
 	//SOUNDS
 	vector<HSTREAM> comboSounds;
@@ -155,9 +156,9 @@ private:
 	HSTREAM soundPowerup;
 
 
-	double mouseX;
-	double mouseY;
-	Vector2D mouseVec;
+	int mouseX;
+	int mouseY;
+	Vector2 mouseVec;
 
 	DatabaseManager dm;
 	bool tableLoaded;
