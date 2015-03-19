@@ -8,7 +8,7 @@
 #pragma once
 
 #include "CONSTS.H"
-#include "bass.h"
+//#include "bass.h"
 #include <vector>
 #include "DatabaseManager.h"
 #include "HighScoreFile.h"
@@ -59,9 +59,9 @@ private:
 	SDL_Texture* creditsSprite;
 	SDL_Texture* startScreen;
 
-	HSTREAM soundChangeSelection;
-	HSTREAM soundConfirmSelection;
-	HSTREAM soundMenuMusic;
+//	HSTREAM soundChangeSelection;
+//	HSTREAM soundConfirmSelection;
+//	HSTREAM soundMenuMusic;
 
 	bool tableLoaded;
 

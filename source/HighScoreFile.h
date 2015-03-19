@@ -34,7 +34,7 @@ public:
 private:
 	void SplitData(vector<string> rows);
 
-	vector<vector<string>> splitData;
+	vector<vector<string> > splitData;
 	ifstream readFileHandle;
 	ofstream writeFileHandle;
 	string fileData;

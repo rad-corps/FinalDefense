@@ -276,23 +276,23 @@ LevelBase::CreateEnemy(ENEMY_TYPE enemyType, ENEMY_SPAWN_POINTS spawnPoint, floa
 	float rand2 = RandomPercentage();
 	Vector2 startingPos;
 
-	if ( spawnPoint == ENEMY_SPAWN_POINTS::BOTTOM ) 
+	if ( spawnPoint == BOTTOM ) 
 	{
 		startingPos = CreateSpawnPointBottom();
 	}
-	else if ( spawnPoint == ENEMY_SPAWN_POINTS::TOP )
+	else if ( spawnPoint == TOP )
 	{
 		startingPos = CreateSpawnPointTop();
 	}
-	else if ( spawnPoint == ENEMY_SPAWN_POINTS::LEFT )
+	else if ( spawnPoint == LEFT )
 	{
 		startingPos = CreateSpawnPointLeft();
 	}
-	else if ( spawnPoint == ENEMY_SPAWN_POINTS::RIGHT )
+	else if ( spawnPoint == RIGHT )
 	{
 		startingPos = CreateSpawnPointRight();
 	}
-	else if (spawnPoint == ENEMY_SPAWN_POINTS::LEFT_OR_RIGHT )
+	else if (spawnPoint == LEFT_OR_RIGHT )
 	{
 		if ( rand < 0.5f )
 			startingPos = CreateSpawnPointLeft();
@@ -300,14 +300,14 @@ LevelBase::CreateEnemy(ENEMY_TYPE enemyType, ENEMY_SPAWN_POINTS spawnPoint, floa
 			startingPos = CreateSpawnPointRight();
 
 	}
-	else if (spawnPoint == ENEMY_SPAWN_POINTS::TOP_OR_BOTTOM )
+	else if (spawnPoint == TOP_OR_BOTTOM )
 	{
 		if ( rand < 0.5f )
 			startingPos = CreateSpawnPointTop();
 		else
 			startingPos = CreateSpawnPointBottom();
 	}
-	else if ( spawnPoint == ENEMY_SPAWN_POINTS::RANDOM_OFF_SCREEN ) 
+	else if ( spawnPoint == RANDOM_OFF_SCREEN ) 
 	{
 
 		//top or bottom
@@ -324,11 +324,11 @@ LevelBase::CreateEnemy(ENEMY_TYPE enemyType, ENEMY_SPAWN_POINTS spawnPoint, floa
 
 	//create enemy
 	EnemyBasePtr enemy;
-	if ( enemyType == ENEMY_TYPE::ENEMY1 )
+	if ( enemyType == ENEMY1 )
 	{
 		enemy = EnemyBasePtr(new Enemy1(plyrX, plyrY, spawnTime, startingPos ));
 	}
-	if ( enemyType == ENEMY_TYPE::ENEMY2 )
+	if ( enemyType == ENEMY2 )
 	{
 		enemy = EnemyBasePtr(new Enemy2(plyrX, plyrY, spawnTime, startingPos ));
 	}
@@ -341,12 +341,12 @@ void LevelBase::CreatePowerUp(POWER_UP_TYPES powerUpType, ENEMY_SPAWN_POINTS spa
 {
 	Vector2 startingPos;
 
-	if ( spawnPoint == ENEMY_SPAWN_POINTS::BOTTOM ) 
+	if ( spawnPoint == BOTTOM ) 
 	{
 		startingPos.x=(SCREEN_WIDTH/2);
 		startingPos.y=(-100.f);
 	}
-	else if ( spawnPoint == ENEMY_SPAWN_POINTS::TOP )
+	else if ( spawnPoint == TOP )
 	{
 		startingPos.x=(SCREEN_WIDTH/2);
 		startingPos.y=(SCREEN_HEIGHT + 100.f);

@@ -74,10 +74,10 @@ Level1::Wave1()
 	//spawn from top
 	for ( int i = 0; i < ENEMY1_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY1, ENEMY_SPAWN_POINTS::TOP, i * spawnInterval);
+		CreateEnemy(ENEMY1, TOP, i * spawnInterval);
 	}
 	
-	CreatePowerUp(POWER_UP_TYPES::POWER_UP_FIRE_RATE, ENEMY_SPAWN_POINTS::TOP, (ENEMY1_COUNT/2) * spawnInterval);
+	CreatePowerUp(POWER_UP_FIRE_RATE, TOP, (ENEMY1_COUNT/2) * spawnInterval);
 	
 	return currentWave;
 }
@@ -92,12 +92,12 @@ Level1::Wave2()
 	//spawn from top
 	for ( int i = 0; i < ENEMY1_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY1, ENEMY_SPAWN_POINTS::BOTTOM, i * spawnInterval);
+		CreateEnemy(ENEMY1, BOTTOM, i * spawnInterval);
 	}
 	
-	CreateEnemy(ENEMY_TYPE::ENEMY2, ENEMY_SPAWN_POINTS::LEFT_OR_RIGHT, ENEMY1_COUNT * (spawnInterval / 2) );
+	CreateEnemy(ENEMY2, LEFT_OR_RIGHT, ENEMY1_COUNT * (spawnInterval / 2) );
 
-	CreatePowerUp(POWER_UP_TYPES::POWER_UP_FIRE_RATE, ENEMY_SPAWN_POINTS::TOP, (ENEMY1_COUNT/2) * spawnInterval);
+	CreatePowerUp(POWER_UP_FIRE_RATE, TOP, (ENEMY1_COUNT/2) * spawnInterval);
 
 	return currentWave;
 }
@@ -113,16 +113,16 @@ Level1::Wave3()
 	//Do Enemy1 Spawn
 	for ( int i = 0; i < ENEMY1_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY1, ENEMY_SPAWN_POINTS::LEFT, i * spawnInterval);
+		CreateEnemy(ENEMY1, LEFT, i * spawnInterval);
 	}
 
 	//Do Enemy2 Spawn
 	for ( int i = 0; i < ENEMY2_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY2, ENEMY_SPAWN_POINTS::RANDOM_OFF_SCREEN, i * (spawnInterval * 12.f) );
+		CreateEnemy(ENEMY2, RANDOM_OFF_SCREEN, i * (spawnInterval * 12.f) );
 	}
 
-	CreatePowerUp(POWER_UP_TYPES::POWER_UP_FIRE_RATE, ENEMY_SPAWN_POINTS::TOP, (ENEMY1_COUNT/2) * spawnInterval);
+	CreatePowerUp(POWER_UP_FIRE_RATE, TOP, (ENEMY1_COUNT/2) * spawnInterval);
 
 	return currentWave;
 }
@@ -138,16 +138,16 @@ Level1::Wave4()
 	//Do Enemy1 Spawn
 	for ( int i = 0; i < ENEMY1_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY1, ENEMY_SPAWN_POINTS::RIGHT, i * spawnInterval);
+		CreateEnemy(ENEMY1, RIGHT, i * spawnInterval);
 	}
 
 	//Do Enemy2 Spawn
 	for ( int i = 0; i < ENEMY2_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY2, ENEMY_SPAWN_POINTS::LEFT, i * (spawnInterval * 6.f) );
+		CreateEnemy(ENEMY2, LEFT, i * (spawnInterval * 6.f) );
 	}
 	
-	CreatePowerUp(POWER_UP_TYPES::POWER_UP_FIRE_RATE, ENEMY_SPAWN_POINTS::TOP, (ENEMY1_COUNT/2) * spawnInterval);
+	CreatePowerUp(POWER_UP_FIRE_RATE, TOP, (ENEMY1_COUNT/2) * spawnInterval);
 	return currentWave;
 }
 
@@ -162,16 +162,16 @@ Level1::Wave5()
 	//Do Enemy1 Spawn
 	for ( int i = 0; i < ENEMY1_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY1, ENEMY_SPAWN_POINTS::TOP_OR_BOTTOM, i * spawnInterval);
+		CreateEnemy(ENEMY1, TOP_OR_BOTTOM, i * spawnInterval);
 	}
 
 	//Do Enemy2 Spawn
 	for ( int i = 0; i < ENEMY2_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY2, ENEMY_SPAWN_POINTS::LEFT_OR_RIGHT, i * (spawnInterval * 3.f) );
+		CreateEnemy(ENEMY2, LEFT_OR_RIGHT, i * (spawnInterval * 3.f) );
 	}
 
-	CreatePowerUp(POWER_UP_TYPES::POWER_UP_FIRE_RATE, ENEMY_SPAWN_POINTS::TOP, (ENEMY1_COUNT/2) * spawnInterval);
+	CreatePowerUp(POWER_UP_FIRE_RATE, TOP, (ENEMY1_COUNT/2) * spawnInterval);
 
 	return currentWave;
 }
@@ -187,16 +187,16 @@ Level1::Wave6()
 	//Do Enemy1 Spawn
 	for ( int i = 0; i < ENEMY1_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY1, ENEMY_SPAWN_POINTS::LEFT_OR_RIGHT, i * spawnInterval);
+		CreateEnemy(ENEMY1, LEFT_OR_RIGHT, i * spawnInterval);
 	}
 
 	//Do Enemy2 Spawn
 	for ( int i = 0; i < ENEMY2_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY2, ENEMY_SPAWN_POINTS::LEFT_OR_RIGHT, i * (ENEMY1_COUNT*0.1f) * spawnInterval );
+		CreateEnemy(ENEMY2, LEFT_OR_RIGHT, i * (ENEMY1_COUNT*0.1f) * spawnInterval );
 	}
 
-	CreatePowerUp(POWER_UP_TYPES::POWER_UP_FIRE_RATE, ENEMY_SPAWN_POINTS::TOP, (ENEMY1_COUNT/2) * spawnInterval);
+	CreatePowerUp(POWER_UP_FIRE_RATE, TOP, (ENEMY1_COUNT/2) * spawnInterval);
 
 	return currentWave;
 }
@@ -212,21 +212,21 @@ Level1::Wave7()
 	//Do Enemy1 Spawn
 	for ( int i = 0; i < ENEMY1_COUNT/2; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY1, ENEMY_SPAWN_POINTS::TOP_OR_BOTTOM, i * spawnInterval);
+		CreateEnemy(ENEMY1, TOP_OR_BOTTOM, i * spawnInterval);
 	}
 	//Do Enemy1 Spawn
 	for ( int i = ENEMY1_COUNT/2; i < ENEMY1_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY1, ENEMY_SPAWN_POINTS::LEFT_OR_RIGHT, i * spawnInterval);
+		CreateEnemy(ENEMY1, LEFT_OR_RIGHT, i * spawnInterval);
 	}
 
 	//Do Enemy2 Spawn
 	for ( int i = 0; i < ENEMY2_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY2, ENEMY_SPAWN_POINTS::TOP, i * (spawnInterval * 3.f) );
+		CreateEnemy(ENEMY2, TOP, i * (spawnInterval * 3.f) );
 	}
 	
-	CreatePowerUp(POWER_UP_TYPES::POWER_UP_FIRE_RATE, ENEMY_SPAWN_POINTS::TOP, (ENEMY1_COUNT/2) * spawnInterval);
+	CreatePowerUp(POWER_UP_FIRE_RATE, TOP, (ENEMY1_COUNT/2) * spawnInterval);
 
 	return currentWave;	
 }
@@ -242,16 +242,16 @@ Level1::Wave8()
 	//Do Enemy1 Spawn
 	for ( int i = 0; i < ENEMY1_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY1, ENEMY_SPAWN_POINTS::LEFT_OR_RIGHT, i * spawnInterval);
+		CreateEnemy(ENEMY1, LEFT_OR_RIGHT, i * spawnInterval);
 	}
 
 	//Do Enemy2 Spawn
 	for ( int i = 0; i < ENEMY2_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY2, ENEMY_SPAWN_POINTS::TOP_OR_BOTTOM, i * (spawnInterval * 3.f) );
+		CreateEnemy(ENEMY2, TOP_OR_BOTTOM, i * (spawnInterval * 3.f) );
 	}
 
-	CreatePowerUp(POWER_UP_TYPES::POWER_UP_FIRE_RATE, ENEMY_SPAWN_POINTS::TOP, 0);
+	CreatePowerUp(POWER_UP_FIRE_RATE, TOP, 0);
 	
 	return currentWave;
 	
@@ -268,16 +268,16 @@ Level1::Wave9()
 	//Do Enemy1 Spawn
 	for ( int i = 0; i < ENEMY1_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY1, ENEMY_SPAWN_POINTS::RANDOM_OFF_SCREEN, i * spawnInterval);
+		CreateEnemy(ENEMY1, RANDOM_OFF_SCREEN, i * spawnInterval);
 	}
 
 	//Do Enemy2 Spawn
 	for ( int i = 0; i < ENEMY2_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY2, ENEMY_SPAWN_POINTS::RANDOM_OFF_SCREEN, i * (spawnInterval * 3.f) );
+		CreateEnemy(ENEMY2, RANDOM_OFF_SCREEN, i * (spawnInterval * 3.f) );
 	}
 
-	CreatePowerUp(POWER_UP_TYPES::POWER_UP_FIRE_RATE, ENEMY_SPAWN_POINTS::TOP, (ENEMY1_COUNT/2) * spawnInterval);
+	CreatePowerUp(POWER_UP_FIRE_RATE, TOP, (ENEMY1_COUNT/2) * spawnInterval);
 
 	return currentWave;
 }
@@ -293,16 +293,16 @@ Level1::Wave10()
 	//Do Enemy1 Spawn
 	for ( int i = 0; i < ENEMY1_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY1, ENEMY_SPAWN_POINTS::RANDOM_OFF_SCREEN, i * spawnInterval);
+		CreateEnemy(ENEMY1, RANDOM_OFF_SCREEN, i * spawnInterval);
 	}
 
 	//Do Enemy2 Spawn
 	for ( int i = 0; i < ENEMY2_COUNT; ++i ) 
 	{
-		CreateEnemy(ENEMY_TYPE::ENEMY2, ENEMY_SPAWN_POINTS::RANDOM_OFF_SCREEN, i * (spawnInterval * 3.f) );
+		CreateEnemy(ENEMY2, RANDOM_OFF_SCREEN, i * (spawnInterval * 3.f) );
 	}
 
-	CreatePowerUp(POWER_UP_TYPES::POWER_UP_FIRE_RATE, ENEMY_SPAWN_POINTS::TOP, (ENEMY1_COUNT/2) * spawnInterval);
+	CreatePowerUp(POWER_UP_FIRE_RATE, TOP, (ENEMY1_COUNT/2) * spawnInterval);
 
 	return currentWave;
 }

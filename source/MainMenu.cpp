@@ -42,7 +42,7 @@ MainMenu::MainMenu(void)
 	menuDisplayName[CREDITS] = "CREDITS";
 	
 	//Control Scheme Initialisation
-	myControlScheme = CONTROL_SCHEME_DEFINIITIONS::KEYBOARD_AND_MOUSE_CONTROL;
+	myControlScheme = KEYBOARD_AND_MOUSE_CONTROL;
 	
 	//Menu Text Colour Initialisation
 	activeMenuItemColour = SColour(10,255,86,255);
@@ -60,21 +60,21 @@ MainMenu::MainMenu(void)
 	startScreen = CreateSprite("./images/title.png", 1024, 768, false );
 
 	//Initialise Menu Sounds
-	soundChangeSelection = BASS_StreamCreateFile(false,SOUND_CHANGE_SELECTION,0,0,0);
-	soundConfirmSelection = BASS_StreamCreateFile(false,SOUND_CONFIRM_SELECTION,0,0,0);
-	soundMenuMusic = BASS_StreamCreateFile(false,SOUND_WAVE_AMBIENCE,0,0,0);
+	// soundChangeSelection = BASS_StreamCreateFile(false,SOUND_CHANGE_SELECTION,0,0,0);
+	// soundConfirmSelection = BASS_StreamCreateFile(false,SOUND_CONFIRM_SELECTION,0,0,0);
+	// soundMenuMusic = BASS_StreamCreateFile(false,SOUND_WAVE_AMBIENCE,0,0,0);
 
-	BASS_ChannelSetAttribute(soundChangeSelection, BASS_ATTRIB_VOL, 0.25f);
-	BASS_ChannelSetAttribute(soundConfirmSelection, BASS_ATTRIB_VOL, 0.5f);
-	BASS_ChannelSetAttribute(soundMenuMusic, BASS_ATTRIB_VOL, 0.35f);
+	// BASS_ChannelSetAttribute(soundChangeSelection, BASS_ATTRIB_VOL, 0.25f);
+	// BASS_ChannelSetAttribute(soundConfirmSelection, BASS_ATTRIB_VOL, 0.5f);
+	// BASS_ChannelSetAttribute(soundMenuMusic, BASS_ATTRIB_VOL, 0.35f);
 
-	BASS_ChannelPlay(soundMenuMusic, true);
+	// BASS_ChannelPlay(soundMenuMusic, true);
 }
 
 
 MainMenu::~MainMenu(void)
 {
-	BASS_ChannelStop(soundMenuMusic);
+//	BASS_ChannelStop(soundMenuMusic);
 }
 
 void
@@ -105,7 +105,7 @@ bool MainMenu::CheckSelection()
 	//do we change selection? 
 	if ((IsKeyDown(SDLK_DOWN) || IsKeyDown(SDLK_UP)) && minTimeBetweenSelection > 0.2f)
 	{
-		BASS_ChannelPlay(soundChangeSelection, true);
+//		BASS_ChannelPlay(soundChangeSelection, true);
 		minTimeBetweenSelection = 0.f;
 		
 		if ( IsKeyDown(SDLK_DOWN) )
@@ -134,22 +134,22 @@ bool MainMenu::CheckSelection()
 
 void MainMenu::StopMusic()
 {
-	BASS_ChannelStop(soundMenuMusic);
+//	BASS_ChannelStop(soundMenuMusic);
 }
 
 void MainMenu::CheckControlMethod()
 {
 	//check if we want to change the control scheme
-	if ( *menuSelection == MENU_SELECTION::CONTROL_SCHEME )
+	if ( *menuSelection == CONTROL_SCHEME )
 	{
 		if ( (IsKeyDown(SDLK_LEFT) || IsKeyDown(SDLK_RIGHT)) && minTimeBetweenSelection > 0.2f )
 		{
-			BASS_ChannelPlay(soundChangeSelection, true);
+//			BASS_ChannelPlay(soundChangeSelection, true);
 			minTimeBetweenSelection = 0.f;
-			if ( myControlScheme == CONTROL_SCHEME_DEFINIITIONS::KEYBOARD_CONTROL ) 
-				myControlScheme = CONTROL_SCHEME_DEFINIITIONS::KEYBOARD_AND_MOUSE_CONTROL;
-			else if ( myControlScheme == CONTROL_SCHEME_DEFINIITIONS::KEYBOARD_AND_MOUSE_CONTROL) 
-				myControlScheme = CONTROL_SCHEME_DEFINIITIONS::KEYBOARD_CONTROL;
+			if ( myControlScheme == KEYBOARD_CONTROL ) 
+				myControlScheme = KEYBOARD_AND_MOUSE_CONTROL;
+			else if ( myControlScheme == KEYBOARD_AND_MOUSE_CONTROL) 
+				myControlScheme = KEYBOARD_CONTROL;
 		}
 	}
 }
@@ -275,7 +275,7 @@ MainMenu::Update()
 	if ( dmMenu.Rows() > 0 && !tableLoaded )
 		tableLoaded = true;	
 	if ( !tableLoaded )
-		return GAMESTATES::MAIN_MENU;
+		return MAIN_MENU;
 
 	minTimeBetweenSelection += GetDeltaTime();
 
@@ -283,14 +283,14 @@ MainMenu::Update()
 
 	CheckControlMethod();
 
-	if ( *menuSelection == MENU_SELECTION::QUIT )
+	if ( *menuSelection == QUIT )
 	{
 		if ( IsKeyDown(SDLK_RETURN)  && minTimeBetweenSelection > 0.2f )
 		{
-			BASS_ChannelPlay(soundChangeSelection, true);
+//			BASS_ChannelPlay(soundChangeSelection, true);
 			minTimeBetweenSelection = 0.f;
 			//Shutdown();
-			return GAMESTATES::SHUTDOWN;
+			return SHUTDOWN;
 		}
 	}
 
@@ -298,7 +298,7 @@ MainMenu::Update()
 	MoveSprite( mainMenuSprite, (float)0, (float)SCREEN_HEIGHT);			
 	DrawSprite(mainMenuSprite );
 
-	if ( *menuSelection == MENU_SELECTION::CREDITS )
+	if ( *menuSelection == CREDITS )
 	{
 		MoveSprite(this->creditsSprite, (float)0, (float)SCREEN_HEIGHT);			
 		DrawSprite(this->creditsSprite);	
@@ -319,25 +319,25 @@ MainMenu::Update()
 		DrawMenuItem(menuSelections[i], i, menuItemsX, menuItemsY, menuItemsYSpacing, menuTextSize);
 	}
 
-	if ( *menuSelection == MENU_SELECTION::HIGH_SCORES )
+	if ( *menuSelection == HIGH_SCORES )
 	{
 		DrawHighScores();
 	}
-	if ( *menuSelection == MENU_SELECTION::START_GAME )
+	if ( *menuSelection == START_GAME )
 	{
 		//DrawString("PRESS ENTER TO START GEO", dmMenu.GetValueInt(0, "START_GAME_X"), dmMenu.GetValueInt(0, "START_GAME_Y"));
 		MoveSprite( this->startScreen, (float)0, (float)SCREEN_HEIGHT);			
 		DrawSprite(this->startScreen);
 	}
-	else if ( *menuSelection == MENU_SELECTION::CONTROL_SCHEME )
+	else if ( *menuSelection == CONTROL_SCHEME )
 	{
-		if ( myControlScheme == CONTROL_SCHEME_DEFINIITIONS::KEYBOARD_AND_MOUSE_CONTROL )
+		if ( myControlScheme == KEYBOARD_AND_MOUSE_CONTROL )
 		{
 			//display kb mouse sprite
 			MoveSprite( kbmouseSprite, (float)0, (float)SCREEN_HEIGHT);			
 			DrawSprite(kbmouseSprite );
 		}
-		else if ( myControlScheme == CONTROL_SCHEME_DEFINIITIONS::KEYBOARD_CONTROL )
+		else if ( myControlScheme == KEYBOARD_CONTROL )
 		{
 			//display keyboard sprite
 			MoveSprite( retroSprite, (float)0, (float)SCREEN_HEIGHT);			
@@ -347,13 +347,13 @@ MainMenu::Update()
 
 	if ( minTimeBetweenSelection > 0.2f )
 	{
-		if( IsKeyDown( SDLK_RETURN ) && *menuSelection == MENU_SELECTION::START_GAME )
+		if( IsKeyDown( SDLK_RETURN ) && *menuSelection == START_GAME )
 		{
-			BASS_ChannelPlay(soundConfirmSelection, true);
-			return GAMESTATES::GAMEPLAY;
+//			BASS_ChannelPlay(soundConfirmSelection, true);
+			return GAMEPLAY;
 		}
 	}
-	return GAMESTATES::MAIN_MENU;
+	return MAIN_MENU;
 }
 
 void 

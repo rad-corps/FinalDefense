@@ -6,7 +6,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "HighScoreFile.h"
-#include <tchar.h>
+//#include <tchar.h>
 #include <algorithm>
 
 

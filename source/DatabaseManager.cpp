@@ -51,11 +51,11 @@ float DatabaseManager::GetValueFloat(int row, string col)
 //Constructor/Destructor
 DatabaseManager::DatabaseManager()
 {
-	sqlDataTypes[DB_SQLITE_DATATYPE::SQLITE_TYPE_NULL] = " NULL ";
-	sqlDataTypes[DB_SQLITE_DATATYPE::SQLITE_TYPE_INTEGER] = " INTEGER ";
-	sqlDataTypes[DB_SQLITE_DATATYPE::SQLITE_TYPE_REAL] = " REAL ";
-	sqlDataTypes[DB_SQLITE_DATATYPE::SQLITE_TYPE_TEXT] = " TEXT ";
-	sqlDataTypes[DB_SQLITE_DATATYPE::SQLITE_TYPE_BLOB] = " BLOB ";
+	sqlDataTypes[SQLITE_TYPE_NULL] = " NULL ";
+	sqlDataTypes[SQLITE_TYPE_INTEGER] = " INTEGER ";
+	sqlDataTypes[SQLITE_TYPE_REAL] = " REAL ";
+	sqlDataTypes[SQLITE_TYPE_TEXT] = " TEXT ";
+	sqlDataTypes[SQLITE_TYPE_BLOB] = " BLOB ";
 }
 DatabaseManager::~DatabaseManager(){}
 

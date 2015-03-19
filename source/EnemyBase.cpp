@@ -9,6 +9,7 @@
 #include "FrameworkHelpers.h"
 #include <iostream>
 #include <string>
+#include <cmath> //floor
 
 //init static members
 vector<EnemyBulletPtr> EnemyBase::bullets;
@@ -37,8 +38,8 @@ EnemyBase::EnemyBase(const float& spawnTime, const int& health, const Vector2& p
 		EnemyBase::InitialiseBullets();
 	}
 
-	soundAsplode = BASS_StreamCreateFile(false,SOUND_ENEMY_DEATH,0,0,0);
-	soundLaser = BASS_StreamCreateFile(false,SOUND_ENEMY_LASER,0,0,0);
+//	soundAsplode = BASS_StreamCreateFile(false,SOUND_ENEMY_DEATH,0,0,0);
+//	soundLaser = BASS_StreamCreateFile(false,SOUND_ENEMY_LASER,0,0,0);
 
 	for ( int i = 0; i < DEATH_ANIMATION_FRAMES; ++ i)
 	{
@@ -149,7 +150,7 @@ void EnemyBase::SetDeathFrames(SDL_Texture** deathAnimation)
 void EnemyBase::Die()
 {
 	timeSinceDeath = 0.0f;
-	BASS_ChannelPlay(soundAsplode, true);
+//	BASS_ChannelPlay(soundAsplode, true);
 }
 
 
@@ -260,7 +261,7 @@ void EnemyBase::Shoot()
 	//GetSpriteAngleVector(sprite, dir);
 	dir.SetAngle(GetGLAHEntity(sprite).rotation);
 	EnemyBase::GetInactiveBullet()->InitialiseBullet(pos.x, pos.y, dir);
-	BASS_ChannelPlay(soundLaser, true);
+//	BASS_ChannelPlay(soundLaser, true);
 }
 
 void EnemyBase::InitialiseBullets()

@@ -11,7 +11,7 @@
 #include "bullet.h"
 #include <list>
 #include "CONSTS.h"
-#include "bass.h"
+//#include "bass.h"
 #include "DatabaseManager.h"
 #include "SDL2/SDL.h"
 
@@ -148,12 +148,12 @@ private:
 	SDL_Texture* gun;
 
 	//SOUNDS
-	vector<HSTREAM> comboSounds;
-	HSTREAM soundShot;
-	HSTREAM soundDeath;
-	HSTREAM soundThrust;
-	HSTREAM soundThrust2;
-	HSTREAM soundPowerup;
+	// vector<HSTREAM> comboSounds;
+	// HSTREAM soundShot;
+	// HSTREAM soundDeath;
+	// HSTREAM soundThrust;
+	// HSTREAM soundThrust2;
+	// HSTREAM soundPowerup;
 
 
 	int mouseX;

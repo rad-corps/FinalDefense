@@ -9,11 +9,11 @@
 
 #include "EnemyBase.h"
 #include <list>
-#include "bass.h"
+//#include "bass.h"
 #include "PowerUp.h"
 
-typedef list<shared_ptr<EnemyList>> EnemyWaves;
-typedef list<shared_ptr<PowerUpList>> PowerUps;
+typedef list<shared_ptr<EnemyList> > EnemyWaves;
+typedef list<shared_ptr<PowerUpList> > PowerUps;
 
 struct WaveInfo
 {

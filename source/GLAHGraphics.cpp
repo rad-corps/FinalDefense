@@ -149,7 +149,7 @@ void GLAHErroCallback(int errorCode_, const char *errStr_)
 void CalculateDelta()
 {
 	timeEnd = high_resolution_clock::now();
-	delta =  duration_cast<duration<double>>(timeEnd - timeBegin).count();
+	delta =  duration_cast<duration<double> >(timeEnd - timeBegin).count();
 	timeBegin = high_resolution_clock::now();
 }
 

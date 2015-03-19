@@ -51,6 +51,6 @@ private:
 	
 };
 
-typedef list<shared_ptr<PowerUp>> PowerUpList;
+typedef list<shared_ptr<PowerUp> > PowerUpList;
 
 typedef shared_ptr<PowerUp> PowerUpPtr;

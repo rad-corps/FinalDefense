@@ -87,9 +87,9 @@ void PowerUp::Move(const float& plyrX, const float& plyrY, bool playerAlive)
 
 		//calculate ypos	
 		float ypos = pos.y;
-		if ( spawnPoint == ENEMY_SPAWN_POINTS::TOP )
+		if ( spawnPoint == TOP )
 			ypos += POWERUP_Y_SPEED;
-		if ( spawnPoint == ENEMY_SPAWN_POINTS::BOTTOM )
+		if ( spawnPoint == BOTTOM )
 			ypos -= POWERUP_Y_SPEED;
 
 		//set positions

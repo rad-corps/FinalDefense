@@ -77,11 +77,11 @@ protected:
 	static void InitialiseBullets();
 
 	//Shoot
-	void EnemyBase::Shoot();
+	void Shoot();
 
 	//sounds
-	HSTREAM soundAsplode;
-	HSTREAM soundLaser;
+//	HSTREAM soundAsplode;
+//	HSTREAM soundLaser;
 
 	float maxSpeed;
 
@@ -91,7 +91,7 @@ private:
 };
 
 //Enemy List ( a list of EnemyBase Types )
-typedef list<shared_ptr<EnemyBase>> EnemyList;
+typedef list<shared_ptr<EnemyBase> > EnemyList;
 
 //Single smart pointer to EnemyBase
 typedef shared_ptr<EnemyBase> EnemyBasePtr;

@@ -15,7 +15,7 @@
 #include <string>
 #include "Hud.h"
 #include "MainMenu.h"
-#include "bass.h"
+//#include "bass.h"
 #include "PauseMenu.h"
 
 
@@ -49,10 +49,10 @@ private:
 	GAMESTATES currentState;			//MAINMENU or GAMEPLAY	
 	HudInfo hudInfo;					//HUD object requires a hudInfo on update
 	Fps fps;							//FPS game object
-	HSTREAM soundWaveComplete;			//Wave complete sound
+//	HSTREAM soundWaveComplete;			//Wave complete sound
 	bool soundWaveCompletePlaying;		
-	HSTREAM soundCurrentLevel;				//play this underneath a wave
-	vector<HSTREAM> soundLevels;
+//	HSTREAM soundCurrentLevel;				//play this underneath a wave
+//	vector<HSTREAM> soundLevels;
 
 	//Pause Menu
 	shared_ptr<PauseMenu> pauseMenu;

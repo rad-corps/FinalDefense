@@ -5,9 +5,9 @@
 // For AIE Advanced Diploma - Game Development Using CPP
 /////////////////////////////////////////////////////////////////////////
 
-#pragma comment(lib, "winmm")
+//#pragma comment(lib, "winmm")
  
-#include <windows.h>
+//#include <windows.h>
 
 #include "GameController.h"
 #include "Enemy1.h"
@@ -23,21 +23,21 @@ GameController::GameController()
 {
 	FrameworkInit();
 	GameInitialise();
-	soundWaveComplete = BASS_StreamCreateFile(false,SOUND_WAVE_COMPLETE,0,0,0);
-	soundCurrentLevel = BASS_StreamCreateFile(false,SOUND_WAVE_AMBIENCE,0,0,0);
+	// soundWaveComplete = BASS_StreamCreateFile(false,SOUND_WAVE_COMPLETE,0,0,0);
+	// soundCurrentLevel = BASS_StreamCreateFile(false,SOUND_WAVE_AMBIENCE,0,0,0);
 	
-	soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level01_trim.mp3",0,0,BASS_SAMPLE_LOOP));
-	soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level02_trim.mp3",0,0,BASS_SAMPLE_LOOP));
-	soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level03_trim.mp3",0,0,BASS_SAMPLE_LOOP));
-	soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level05_trim.mp3",0,0,BASS_SAMPLE_LOOP));
-	soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level05_trim.mp3",0,0,BASS_SAMPLE_LOOP));
-	soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level07_trim.mp3",0,0,BASS_SAMPLE_LOOP));
-	soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level07_trim.mp3",0,0,BASS_SAMPLE_LOOP));
-	soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level08_trim.mp3",0,0,BASS_SAMPLE_LOOP));
-	soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level09_trim.mp3",0,0,BASS_SAMPLE_LOOP));
-	soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level10_trim.mp3",0,0,BASS_SAMPLE_LOOP)); 
+	// soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level01_trim.mp3",0,0,BASS_SAMPLE_LOOP));
+	// soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level02_trim.mp3",0,0,BASS_SAMPLE_LOOP));
+	// soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level03_trim.mp3",0,0,BASS_SAMPLE_LOOP));
+	// soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level05_trim.mp3",0,0,BASS_SAMPLE_LOOP));
+	// soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level05_trim.mp3",0,0,BASS_SAMPLE_LOOP));
+	// soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level07_trim.mp3",0,0,BASS_SAMPLE_LOOP));
+	// soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level07_trim.mp3",0,0,BASS_SAMPLE_LOOP));
+	// soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level08_trim.mp3",0,0,BASS_SAMPLE_LOOP));
+	// soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level09_trim.mp3",0,0,BASS_SAMPLE_LOOP));
+	// soundLevels.push_back(BASS_StreamCreateFile(false,"./sound/Level10_trim.mp3",0,0,BASS_SAMPLE_LOOP)); 
 	
-	soundCurrentLevel = soundLevels[0];
+	//soundCurrentLevel = soundLevels[0];
 
 	soundWaveCompletePlaying = false;
 	timerRunning = true; //run timer from startup
@@ -57,7 +57,7 @@ GameController::FrameworkInit()
 	AddFont( NUMBERS_FONT );
 
 	//Initialise BASE engine
-	BASS_Init(-1,44100,0,0,0);
+//	BASS_Init(-1,44100,0,0,0);
 }
 
 void
@@ -84,7 +84,7 @@ GameController::GameInitialise()
 	pauseMenu = make_shared<PauseMenu>();
 
 	currentLevel = shared_ptr<Level1>( new Level1(player->XPtr(), player->YPtr() ));
-	currentState = GAMESTATES::MAIN_MENU;
+	currentState = MAIN_MENU;
 	
 	//init class variables
 	timeBetweenWaves = 0.f;
@@ -97,56 +97,58 @@ GameController::GameInitialise()
 
 void GameController::GameLoop()
 {
+	bool quit = false;
 	do 
 	{
 		ClearScreen();
 
 		switch (currentState )
 		{
-		case GAMESTATES::RESET_TO_MENU:
+		case RESET_TO_MENU:
 			player->TurnOffEngine();
 			DestroyGameObjects();
 			GameInitialise();
-			currentState = GAMESTATES::MAIN_MENU;
+			currentState = MAIN_MENU;
 			break;
-		case GAMESTATES::MAIN_MENU:
+		case MAIN_MENU:
 			currentState = mainMenu->Update();
 			
 			//should we swap to gameplay state? 
-			if ( currentState == GAMESTATES::GAMEPLAY )	{
+			if ( currentState == GAMEPLAY )	{
 				mainMenu->StopMusic();				
 				player->SetControlScheme(mainMenu->ControlScheme());
 				player->TurnOnEngine();
 				
 				//TODO start ambience
-				BASS_ChannelPlay(soundCurrentLevel, true);
-				BASS_ChannelSetAttribute(soundCurrentLevel, BASS_ATTRIB_VOL, 0.5f);
+//				BASS_ChannelPlay(soundCurrentLevel, true);
+//				BASS_ChannelSetAttribute(soundCurrentLevel, BASS_ATTRIB_VOL, 0.5f);
 			}
 			break;
-		case GAMESTATES::GAMEPLAY:
+		case GAMEPLAY:
 			UpdateGameState();	
 
 			//do we want to escape to main menu? 
 			if( IsKeyDown( SDLK_ESCAPE ) ) {
-				//currentLevel->PauseGameSound();
-				BASS_ChannelPause(soundCurrentLevel);
+				
+//				BASS_ChannelPause(soundCurrentLevel);
 				currentState = ShowPauseScreen();
 			}	
 			break;
-		case GAMESTATES::PAUSED:
+		case PAUSED:
 			player->TurnOffEngine();			
 			UpdateGameState();
 			if ( currentState == PAUSED )
 				currentState = ShowPauseScreen();
-			if ( currentState == GAMEPLAY )
-				BASS_ChannelPlay(soundCurrentLevel, false);
+			if ( currentState == GAMEPLAY ){}
+//				BASS_ChannelPlay(soundCurrentLevel, false);
 			break;
 		default:
 			break;
 		}
-		FrameworkUpdate();
+		quit = FrameworkUpdate();
 	//} while ( FrameworkUpdate() == false );
-	} while ( currentState != GAMESTATES::SHUTDOWN );
+	//} while ( currentState != SHUTDOWN );
+	} while ( !quit );
 	
 	Shutdown();
 }
@@ -158,11 +160,11 @@ GAMESTATES GameController::ShowPauseScreen()
 
 	if ( IsKeyDown(SDLK_q) )
 	{
-		return GAMESTATES::MAIN_MENU;
+		return MAIN_MENU;
 	}
 	else if ( IsKeyDown(SDLK_RETURN) )
 	{
-		return GAMESTATES::GAMEPLAY;
+		return GAMEPLAY;
 	}
 	else
 	{
@@ -196,7 +198,7 @@ void GameController::FixedUpdate()
 void 
 GameController::UpdateGameState()
 {
-	if ( currentState == GAMESTATES::PAUSED )
+	if ( currentState == PAUSED )
 	{
 		currentState = pauseMenu->Update();
 		pauseMenu->Draw();
@@ -204,7 +206,8 @@ GameController::UpdateGameState()
 			player->TurnOnEngine();
 	}
 
-	if ( currentLevel == 0 )
+	//HACK: TODO FIX
+	if ( currentLevel.get() == nullptr )
 	{
 		currentLevel->CreateNextWave();
 	}
@@ -254,7 +257,7 @@ GameController::UpdateGameState()
 	while ( fixedUpdateTimer > UPDATE_INTERVAL )
 	{
 		//current level controls the enemies, background, power ups
-		if ( currentState == GAMESTATES::GAMEPLAY )
+		if ( currentState == GAMEPLAY )
 			waveEnd = currentLevel->Update(player->Alive());
 
 		//If we are at the end of a wave
@@ -262,11 +265,11 @@ GameController::UpdateGameState()
 		{
 			if  (soundWaveCompletePlaying == false)
 			{
-				BASS_ChannelStop(soundCurrentLevel);
+//				BASS_ChannelStop(soundCurrentLevel);
 				
-				soundCurrentLevel = soundLevels[hudInfo.waveNum % MAX_WAVES];
+//				soundCurrentLevel = soundLevels[hudInfo.waveNum % MAX_WAVES];
 
-				BASS_ChannelPlay(soundWaveComplete, true);
+//				BASS_ChannelPlay(soundWaveComplete, true);
 				soundWaveCompletePlaying = true;
 			}
 
@@ -282,9 +285,9 @@ GameController::UpdateGameState()
 				//enemies = currentLevel->GetNextEnemyList();
 				//powerUps = currentLevel->GetNextPowerUpList();
 				player->ResetAccuracyStats();
-				BASS_ChannelPlay(soundCurrentLevel, true);
+//				BASS_ChannelPlay(soundCurrentLevel, true);
 
-				if ( waveInfo.enemies == NULL )
+				if ( waveInfo.enemies.get() == nullptr )
 				{
 					levelComplete = true;
 				}
@@ -294,13 +297,13 @@ GameController::UpdateGameState()
 			}
 		}
 
-		if ( currentState == GAMESTATES::GAMEPLAY )
+		if ( currentState == GAMEPLAY )
 			player->UpdatePlayer();
 		fixedUpdateTimer -= UPDATE_INTERVAL;
 	}
 
 	currentLevel->Draw();
-	if ( currentState == GAMESTATES::GAMEPLAY )
+	if ( currentState == GAMEPLAY )
 		player->UpdateBullets();
 	player->Draw();
 	
@@ -326,7 +329,7 @@ GameController::DoCollisionChecks()
 	hudInfo.powerUpPickupX = -100;
 	hudInfo.powerUpPickupY = -100;
 
-	if ( waveInfo.enemies != NULL )
+	if ( waveInfo.enemies.get() != nullptr )
 	{
 		//check power ups against player
 		//check enemy against player projectiles

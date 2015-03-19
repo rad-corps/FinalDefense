@@ -61,7 +61,7 @@ private:
 	int Callback(int numArgs, char **data, char **columnName);
 	bool locked;
 
-	vector<map<string, string>> databaseResponse;	//colname, value
+	vector<map<string, string> > databaseResponse;	//colname, value
 	map<DB_SQLITE_DATATYPE, string> sqlDataTypes;
 };
 

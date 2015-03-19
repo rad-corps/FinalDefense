@@ -32,32 +32,32 @@ Player::Player()
 	alive = true;
 	lives = LIVES;
 
-	soundDeath = BASS_StreamCreateFile(false,SOUND_PLAYER_DEATH,0,0,0);
-	soundThrust = BASS_StreamCreateFile(false,SOUND_PLAYER_THRUST,0,0,BASS_SAMPLE_LOOP);
-	soundThrust2 = BASS_StreamCreateFile(false,SOUND_PLAYER_THRUST2,0,0,BASS_SAMPLE_LOOP);
+	// soundDeath = BASS_StreamCreateFile(false,SOUND_PLAYER_DEATH,0,0,0);
+	// soundThrust = BASS_StreamCreateFile(false,SOUND_PLAYER_THRUST,0,0,BASS_SAMPLE_LOOP);
+	// soundThrust2 = BASS_StreamCreateFile(false,SOUND_PLAYER_THRUST2,0,0,BASS_SAMPLE_LOOP);
 	
 	
-	soundShot = BASS_StreamCreateFile(false,SOUND_PLAYER_LASER,0,0,0);	
-	soundPowerup = BASS_StreamCreateFile(false,SOUND_POWERUP,0,0,0);	
+	// soundShot = BASS_StreamCreateFile(false,SOUND_PLAYER_LASER,0,0,0);	
+	// soundPowerup = BASS_StreamCreateFile(false,SOUND_POWERUP,0,0,0);	
 
 	ResetAccuracyStats();
 
 	powerUpFireRateMulti = 0;
 
-	comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo01.mp3",0,0,0));
-	comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo02.mp3",0,0,0));
-	comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo03.mp3",0,0,0));
-	comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo04.mp3",0,0,0));
-	comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo05.mp3",0,0,0));
-	comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo06.mp3",0,0,0));
-	comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo07.mp3",0,0,0));
-	comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo08.mp3",0,0,0));
-	comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo09.mp3",0,0,0));
-	comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo10.mp3",0,0,0));
+	// comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo01.mp3",0,0,0));
+	// comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo02.mp3",0,0,0));
+	// comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo03.mp3",0,0,0));
+	// comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo04.mp3",0,0,0));
+	// comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo05.mp3",0,0,0));
+	// comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo06.mp3",0,0,0));
+	// comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo07.mp3",0,0,0));
+	// comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo08.mp3",0,0,0));
+	// comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo09.mp3",0,0,0));
+	// comboSounds.push_back(BASS_StreamCreateFile(false, "./sound/Combo10.mp3",0,0,0));
 
 	for ( int i = 0; i < 10; ++i )
 	{
-		BASS_ChannelSetAttribute(comboSounds[i], BASS_ATTRIB_VOL, 0.1f);
+//		BASS_ChannelSetAttribute(comboSounds[i], BASS_ATTRIB_VOL, 0.1f);
 	}
 }
 
@@ -165,7 +165,7 @@ void Player::UpdateBullets()
 void Player::Shoot()
 {
 	//play sound
-	BASS_ChannelPlay(soundShot, true);
+//	BASS_ChannelPlay(soundShot, true);
 	Vector2 gunDir, tempPos;
 	tempPos.SetAngle(GetGLAHEntity(gun).rotation);
 	//GetSpriteAngleVector(gun, gunDir);
@@ -181,7 +181,7 @@ Player::RotateShipAndWeapons()
 {
 	float rot  = dm.GetValueFloat(0, "ROTATION_SPEED");
 
-	if ( movementState == PLAYER_MOVEMENT_STATE::PLAYER_THRUSTING ) 
+	if ( movementState == PLAYER_THRUSTING ) 
 	{
 		//float dirRadians = GetRadiansFromVector(dir);
 		float dirRadians = dir.GetAngle();
@@ -239,7 +239,7 @@ Player::RotateShipAndWeapons()
 void Player::SetThrust(Vector2 thrust)
 {
 	this->thrust += thrust;
-	movementState = PLAYER_MOVEMENT_STATE::PLAYER_THRUSTING;
+	movementState = PLAYER_THRUSTING;
 }
 
 void Player::HandleUserInput()
@@ -249,7 +249,7 @@ void Player::HandleUserInput()
 	dir.SetAngle(GetGLAHEntity(sprite).rotation);
 
 	float rot  = dm.GetValueFloat(0, "ROTATION_SPEED");
-	if  (controlScheme == CONTROL_SCHEME_DEFINIITIONS::KEYBOARD_CONTROL)
+	if  (controlScheme == KEYBOARD_CONTROL)
 	{		
 		//handle user input
 		if (IsKeyDown(SDLK_LSHIFT) && IsKeyDown(SDLK_LEFT) )
@@ -276,7 +276,7 @@ void Player::HandleUserInput()
 			if  (currentReloadBulletTime > GetFireRate())//bullet	
 				Shoot();
 	}
-	else if ( controlScheme == CONTROL_SCHEME_DEFINIITIONS::KEYBOARD_AND_MOUSE_CONTROL )
+	else if ( controlScheme == KEYBOARD_AND_MOUSE_CONTROL )
 	{
 		if (IsKeyDown(SDLK_a))						
 			SetThrust(left);
@@ -291,7 +291,7 @@ void Player::HandleUserInput()
 				Shoot();
 
 		if ( thrust == neutral )
-			movementState = PLAYER_MOVEMENT_STATE::PLAYER_NEUTRAL;
+			movementState = PLAYER_NEUTRAL;
 
 		RotateShipAndWeapons();
 	}
@@ -341,11 +341,11 @@ void Player::AdjustEnginePitch()
 		//<< "\t velocity.GetLength(): " << velocity.GetLength()
 		//<< "\t pitchMultiplyer: " << pitchMultiplyer << endl;
 
-	BASS_ChannelSetAttribute(soundThrust2, BASS_ATTRIB_FREQ, pitchMultiplyer);
+//	BASS_ChannelSetAttribute(soundThrust2, BASS_ATTRIB_FREQ, pitchMultiplyer);
 
 	float velocityMultiplyer = currentVelocity / maxSpeed;
 	float lerp = Lerp(minVol, maxVol, velocityMultiplyer);
-	BASS_ChannelSetAttribute(soundThrust, BASS_ATTRIB_VOL, lerp);
+//	BASS_ChannelSetAttribute(soundThrust, BASS_ATTRIB_VOL, lerp);
 }
 
 int Player::Lives()
@@ -362,7 +362,7 @@ void Player::Die()
 {
 	if ( alive )
 	{
-		BASS_ChannelPlay(soundDeath, true);
+//		BASS_ChannelPlay(soundDeath, true);
 		this->TurnOffEngine();
 		--lives;
 		alive = false;
@@ -499,10 +499,10 @@ void Player::AddPoints( const unsigned int& points)
 	
 	++combo;
 
-	if ( combo <= 10 )
-		BASS_ChannelPlay(comboSounds[combo-1], true);
-	else
-		BASS_ChannelPlay(comboSounds[9], true);
+//	if ( combo <= 10 )
+//		BASS_ChannelPlay(comboSounds[combo-1], true);
+//	else
+//		BASS_ChannelPlay(comboSounds[9], true);
 
 	timeSinceLastKill = 0.0f;
 	
@@ -528,13 +528,13 @@ int Player::Combo()
 
 void Player::TurnOnEngine()
 {
-	BASS_ChannelPlay(soundThrust, true);
-	BASS_ChannelPlay(soundThrust2, true);
+	// BASS_ChannelPlay(soundThrust, true);
+	// BASS_ChannelPlay(soundThrust2, true);
 }
 void Player::TurnOffEngine()
 {
-	BASS_ChannelStop(soundThrust);
-	BASS_ChannelStop(soundThrust2);
+	// BASS_ChannelStop(soundThrust);
+	// BASS_ChannelStop(soundThrust2);
 }
 
 void Player::IncrementHitCounter()
@@ -560,8 +560,8 @@ int Player::AddPowerUp(POWER_UP_TYPES type)
 {
 	points += 500;
 
-	BASS_ChannelPlay(soundPowerup, true);
-	if ( type == POWER_UP_TYPES::POWER_UP_FIRE_RATE ) 
+//	BASS_ChannelPlay(soundPowerup, true);
+	if ( type == POWER_UP_FIRE_RATE ) 
 	{
 		if ( powerUpFireRateMulti < MAX_POWER_UPS )
 		{
@@ -569,19 +569,19 @@ int Player::AddPowerUp(POWER_UP_TYPES type)
 		}
 		return 500;
 	}
-	else if ( type == POWER_UP_TYPES::POWER_UP_BACK_GUN ) 
+	else if ( type == POWER_UP_BACK_GUN ) 
 	{
 
 	}
-	else if ( type == POWER_UP_TYPES::POWER_UP_SHIELD ) 
+	else if ( type == POWER_UP_SHIELD ) 
 	{
 
 	}
-	else if ( type == POWER_UP_TYPES::POWER_UP_SPEED_UP ) 
+	else if ( type == POWER_UP_SPEED_UP ) 
 	{
 
 	}
-	else if ( type == POWER_UP_TYPES::POWER_UP_WING_GUNS ) 
+	else if ( type == POWER_UP_WING_GUNS ) 
 	{
 
 	}
