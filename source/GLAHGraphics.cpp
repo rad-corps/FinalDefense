@@ -19,7 +19,6 @@
 #include <algorithm>
 #include <map>
 
-
 using namespace std::chrono; 
 
 std::map<SDL_Keycode, bool> keyDownList; //key, isDown
@@ -83,6 +82,8 @@ SDL_Texture* CreateSprite	( const char* textureName_,
 
     //Load image at specified path
     SDL_Surface* loadedSurface = IMG_Load( textureName_ );
+    cout << "img w: " << loadedSurface->w << "img h: " << loadedSurface->h << endl;
+	cout << "passed w: " << width_ << "passed h: " << height_ << endl;    
     if( loadedSurface == NULL )
     {
         printf( "Unable to load image %s! SDL_image Error: %s\n", textureName_, IMG_GetError() );
@@ -102,9 +103,13 @@ SDL_Texture* CreateSprite	( const char* textureName_,
 
 	//Create an entity with position, scale, rotation info
 	GLAHEntity glahEntity;
-	glahEntity.size.x = (float)width_;
-	glahEntity.size.y = (float)height_;
+	glahEntity.size.x = loadedSurface->w;
+	glahEntity.size.y = loadedSurface->h;
 	glahEntity.parentSpriteID = parentSpriteID_;
+	glahEntity.scaleX = (float)width_ / (float)loadedSurface->w;
+	glahEntity.scaleY = (float)height_ / (float)loadedSurface->h;
+
+	cout << "scalex: " << glahEntity.scaleX << "\t scaley: " << glahEntity.scaleY << endl;
 	//glahEntity.spriteID = newTexture;
 	//glahEntity.position = Vector3((float)x_, (float)y_, 1.f);
 	glahEntity.origin = originOffset_;
@@ -251,7 +256,7 @@ int Initialise(int a_iWidth, int a_iHeight, bool a_bFullscreen, const char* a_pW
 			else
             {
                 //Initialize renderer color
-                SDL_SetRenderDrawColor( renderer, 0x2C, 0x2C, 0x2C, 0xFF );
+                SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0x00, 0xFF );
 
                 //Initialize PNG loading
                 int imgFlags = IMG_INIT_PNG;
@@ -278,7 +283,7 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
 	GLAHEntity entity = spriteList[sprite_];
 	//SDL_Rect src = { entity.UV[0], entity.UV[1], entity.UV[2], entity.UV[3] };
 	SDL_Rect src = { 0, 0, entity.size.x, entity.size.y};
-	SDL_Rect dst = { entity.position.x, 768 - entity.position.y, entity.size.x, entity.size.y };
+	SDL_Rect dst = { entity.position.x, 768 - entity.position.y, entity.size.x * entity.scaleX, entity.size.y * entity.scaleY };
 
 	//flipping horizontally?
 	SDL_RendererFlip flip = SDL_FLIP_NONE;

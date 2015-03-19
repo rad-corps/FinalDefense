@@ -212,14 +212,15 @@ Player::RotateShipAndWeapons()
 		if ( cwDist > acwDist ) //anticlockwisw
 		{
 			if ( (acwDist) > ROTATION_TOLLERANCE )
-				RotateSpriteRelative(sprite, rot);
+				
+				RotateSprite(sprite, thrust.GetAngle());
 			else
 				RotateSprite(sprite, thrust.GetAngle());
 		}
 		else 
 		{
 			if ( (cwDist) > ROTATION_TOLLERANCE )
-				RotateSpriteRelative(sprite, -rot);
+				RotateSprite(sprite, thrust.GetAngle());
 			else
 				RotateSprite(sprite, thrust.GetAngle());
 		}
