@@ -187,7 +187,7 @@ void EnemyBase::Draw(const float& plyrX, const float& plyrY)
 float 
 EnemyBase::AngleToPlayer(const float& plyrX, const float& plyrY)
 {
-	return atan2(plyrY - Y(), plyrX - X());
+	return atan2(Y() - plyrY, plyrX - X());
 }
 
 float 

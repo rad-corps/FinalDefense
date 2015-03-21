@@ -166,7 +166,6 @@ float GetDeltaTime()
 bool FrameworkUpdate()
 {
     CalculateDelta();
-	
 
 	//Update screen
     SDL_RenderPresent( renderer );
@@ -291,6 +290,7 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
 	{
 		flip = SDL_FLIP_HORIZONTAL;
 	}
+	
 	SDL_RenderCopyEx( renderer, sprite_, &src, &dst, entity.rotation * 57.2957795f, NULL, flip );
 
 }
@@ -381,7 +381,7 @@ bool GetMouseButtonDown( int a_iMouseButtonToTest )
 void GetMouseLocation( int& a_iMouseX, int& a_iMouseY )
 {
 	SDL_GetMouseState( &a_iMouseX, &a_iMouseY );
-	a_iMouseY = 768 - a_iMouseY;
+	a_iMouseY =  a_iMouseY;
 	//cout << "mousex: " << x << "  mousey:" << y << endl;
 }
 //END INPUT HANDLING

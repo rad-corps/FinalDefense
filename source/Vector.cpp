@@ -28,6 +28,14 @@ Vector2::Vector2(float x, float y)
 
 Vector2::~Vector2(){}
 
+Vector2 Vector2::InverseY()
+{
+	Vector2 ret;
+	ret.x = this->x;
+	ret.y = -this->y;
+	return ret;
+}
+
 //Magnitude Functions
 void Vector2::SetMagnitude(float length)
 {
@@ -53,6 +61,11 @@ void Vector2::SetAngle(float angle)//angle in Radians (between -pi and pi)
 float Vector2::GetAngle()
 {
 	return atan2(this->y, this->x);
+}
+
+float Vector2::GetAngleYInverse()
+{
+	return atan2(-this->y, this->x);
 }
 
 //overloaded arithmetic operators

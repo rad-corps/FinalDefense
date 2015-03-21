@@ -213,16 +213,16 @@ Player::RotateShipAndWeapons()
 		{
 			if ( (acwDist) > ROTATION_TOLLERANCE )
 				
-				RotateSprite(sprite, thrust.GetAngle());
+				RotateSprite(sprite, thrust.GetAngleYInverse());
 			else
-				RotateSprite(sprite, thrust.GetAngle());
+				RotateSprite(sprite, thrust.GetAngleYInverse());
 		}
 		else 
 		{
 			if ( (cwDist) > ROTATION_TOLLERANCE )
-				RotateSprite(sprite, thrust.GetAngle());
+				RotateSprite(sprite, thrust.GetAngleYInverse());
 			else
-				RotateSprite(sprite, thrust.GetAngle());
+				RotateSprite(sprite, thrust.GetAngleYInverse());
 		}
 	}
 
@@ -234,7 +234,7 @@ Player::RotateShipAndWeapons()
 	Vector2 shipDir = thrust;	
 	direction.Normalise();	
 	shipDir.Normalise();	
-	RotateSprite(gun, direction.GetAngle());
+	RotateSprite(gun, direction.GetAngleYInverse());
 }
 
 void Player::SetThrust(Vector2 thrust)
@@ -390,11 +390,21 @@ float Player::GetFireRate()
 void Player::SetGunPos()
 {	
 	//get normalised player direction
+	//Vector2 tempPos = dir.InverseY();
 	Vector2 tempPos = dir;
 	tempPos.Normalise();
-	tempPos.SetMagnitude(13.f);
-	gunPos.x = (pos.x - tempPos.x);
-	gunPos.y = (pos.y - tempPos.y);
+	//tempPos.SetMagnitude(14.0f);
+	
+	//gunPos.x = (pos.x + dir);
+	//gunPos.y = (pos.y + dir);
+
+	gunPos = pos;
+	gunPos.x += 10;
+
+	cout << "dir: " << dir << endl;
+	cout << "tempPos: " << tempPos << endl;
+	cout << "gunPos: " << gunPos << endl;
+
 }
 
 //Checks for and handles user input
@@ -410,7 +420,7 @@ void Player::UpdatePlayer()
 		return;
 	}
 
-	SetGunPos();
+	
 	thrust = neutral;
 	if ( alive )
 	{
@@ -439,6 +449,7 @@ void Player::UpdatePlayer()
 		//}
 
 		HandleUserInput(); //movement and shooting
+		SetGunPos();
 		CheckPlayerBounds(); // dont let the player go out of bounds
 	}
 	else //death animation
