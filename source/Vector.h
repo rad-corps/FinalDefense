@@ -72,6 +72,9 @@ public:
 	//Angle Helpers
 	void SetAngle(float angle);
 	float GetAngle();
+	float GetAngleYInverse();
+
+	Vector2 InverseY();
 	
 	//Magnitude
 	void SetMagnitude(float length);
