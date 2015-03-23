@@ -89,7 +89,8 @@ void Player::InitSprites()
 
 
 	//create gun sprite
-	gun = CreateSprite("./images/PNG/Parts/gun01.png", 33 / 2, 17 / 2, sprite );
+	//gun = CreateSprite("./images/PNG/Parts/gun01.png", 33 / 2, 17 / 2, sprite, Vector2(31,47/2) );
+	gun = CreateSprite("./images/PNG/Parts/gun01.png", 33, 17, sprite, Vector2(0,-PLAYER_HEIGHT/2 + 8.5) );
 
 	tableLoaded = true;
 }
@@ -468,13 +469,16 @@ void Player::UpdatePlayer()
 
 void Player::Draw()
 {
-	Vector2 gunOffset(16,-35);
+	//Vector2 gunOffset(16,-35);
+	//SDL_Point point;
+	//point.x = 16;
+	//point.y = -35;
 
 	if  (!tableLoaded)
 		return;
 
 	MoveSprite( currentSprite, pos.x, pos.y );	
-	MoveSprite( gun, gunOffset.x, gunOffset.y);	
+	//MoveSprite( gun, gunOffset.x, gunOffset.y);	
 	DrawSprite( currentSprite );				
 	
 	//gun was still appearing after death, bugfix. 

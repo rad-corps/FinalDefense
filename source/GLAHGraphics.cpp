@@ -276,21 +276,27 @@ int Initialise(int a_iWidth, int a_iHeight, bool a_bFullscreen, const char* a_pW
 }
 
 //GLAH::DrawSprite ( unsigned int spriteID_)
-void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
+void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* origin_)
 {
 	//Render texture to screen
 	GLAHEntity entity = spriteList[sprite_];
 	
 	Vector2 parentPos(0.0f,0.0f);
+	Vector2 offset(0.0f,0.0f);
 	//get parent position and rotation
 	if ( entity.parentSprite != nullptr ) 
 	{
 		parentPos = spriteList[entity.parentSprite].position;
-		//TODO rotation
+		offset = entity.origin;
+		offset.SetAngle(spriteList[entity.parentSprite].rotation);
+		offset = offset.InverseY();
+		
+		cout << "offs: " << offset << endl;
+		cout << "pos: " << entity.position.x << endl;
 	}
 
 	SDL_Rect src = { 0, 0, entity.size.x, entity.size.y};
-	SDL_Rect dst = { entity.position.x + parentPos.x, 768 - entity.position.y - parentPos.y, entity.size.x * entity.scaleX, entity.size.y * entity.scaleY };
+	SDL_Rect dst = { entity.position.x + parentPos.x + offset.x, 768 - entity.position.y - parentPos.y - offset.y, entity.size.x * entity.scaleX, entity.size.y * entity.scaleY };
 
 	//flipping horizontally?
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
@@ -299,7 +305,7 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
 		flip = SDL_FLIP_HORIZONTAL;
 	}
 	
-	SDL_RenderCopyEx( renderer, sprite_, &src, &dst, entity.rotation * 57.2957795f, NULL, flip );
+	SDL_RenderCopyEx( renderer, sprite_, &src, &dst, entity.rotation * 57.2957795f, nullptr, flip );
 
 }
 
