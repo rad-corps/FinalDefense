@@ -14,7 +14,7 @@
 //Enemy1::Enemy1(Player* player, const float& spawnAt) : EnemyBase(player,spawnAt,10)
 Enemy1::Enemy1(float* plyrX, float* plyrY, const float& spawnTime, const Vector2& pos) : EnemyBase(spawnTime,10, pos, plyrX, plyrY)
 {
-	sprite = CreateSprite("./images/PNG/Enemies/enemyBlack1.png", ENEMYSINE_WIDTH, ENEMYSINE_HEIGHT, true);
+	sprite = CreateSprite("./images/PNG/Enemies/enemyBlack1.png", ENEMYSINE_WIDTH, ENEMYSINE_HEIGHT);
 	frameCount = 0;
 }
 

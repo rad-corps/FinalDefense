@@ -67,7 +67,7 @@ Level1::CreateNextWave()
 WaveInfo
 Level1::Wave1()
 {
-	const int ENEMY1_COUNT = 10;
+	const int ENEMY1_COUNT = 1;
 
 	currentWave = InitialiseWave();
 

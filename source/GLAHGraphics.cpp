@@ -73,8 +73,8 @@ SDL_Window*		GetWindow()
 // colour_			: not implemented
 SDL_Texture* CreateSprite	( const char* textureName_, 
 									 int width_, int height_, 
-									 unsigned int parentSpriteID_, 
-									 Vector3 originOffset_, 
+									 SDL_Texture* parentSprite_, 
+									 Vector2 rotationOrigin_, 
 									 SColour colour_ )
  {
     //The final texture
@@ -82,8 +82,8 @@ SDL_Texture* CreateSprite	( const char* textureName_,
 
     //Load image at specified path
     SDL_Surface* loadedSurface = IMG_Load( textureName_ );
-    cout << "img w: " << loadedSurface->w << "img h: " << loadedSurface->h << endl;
-	cout << "passed w: " << width_ << "passed h: " << height_ << endl;    
+    //cout << "img w: " << loadedSurface->w << "img h: " << loadedSurface->h << endl;
+	//cout << "passed w: " << width_ << "passed h: " << height_ << endl;    
     if( loadedSurface == NULL )
     {
         printf( "Unable to load image %s! SDL_image Error: %s\n", textureName_, IMG_GetError() );
@@ -105,14 +105,14 @@ SDL_Texture* CreateSprite	( const char* textureName_,
 	GLAHEntity glahEntity;
 	glahEntity.size.x = loadedSurface->w;
 	glahEntity.size.y = loadedSurface->h;
-	glahEntity.parentSpriteID = parentSpriteID_;
+	glahEntity.parentSprite = parentSprite_;
 	glahEntity.scaleX = (float)width_ / (float)loadedSurface->w;
 	glahEntity.scaleY = (float)height_ / (float)loadedSurface->h;
 
-	cout << "scalex: " << glahEntity.scaleX << "\t scaley: " << glahEntity.scaleY << endl;
+	//cout << "scalex: " << glahEntity.scaleX << "\t scaley: " << glahEntity.scaleY << endl;
 	//glahEntity.spriteID = newTexture;
 	//glahEntity.position = Vector3((float)x_, (float)y_, 1.f);
-	glahEntity.origin = originOffset_;
+	glahEntity.origin = rotationOrigin_;
 
 	//add to the spriteList (map) using the texture_handle as the key
 	spriteList[newTexture] = glahEntity;
@@ -280,9 +280,17 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
 {
 	//Render texture to screen
 	GLAHEntity entity = spriteList[sprite_];
-	//SDL_Rect src = { entity.UV[0], entity.UV[1], entity.UV[2], entity.UV[3] };
+	
+	Vector2 parentPos(0.0f,0.0f);
+	//get parent position and rotation
+	if ( entity.parentSprite != nullptr ) 
+	{
+		parentPos = spriteList[entity.parentSprite].position;
+		//TODO rotation
+	}
+
 	SDL_Rect src = { 0, 0, entity.size.x, entity.size.y};
-	SDL_Rect dst = { entity.position.x, 768 - entity.position.y, entity.size.x * entity.scaleX, entity.size.y * entity.scaleY };
+	SDL_Rect dst = { entity.position.x + parentPos.x, 768 - entity.position.y - parentPos.y, entity.size.x * entity.scaleX, entity.size.y * entity.scaleY };
 
 	//flipping horizontally?
 	SDL_RendererFlip flip = SDL_FLIP_NONE;

@@ -7,7 +7,7 @@ EnemyBullet::EnemyBullet()
 	x = 0.f;
 	y = 0.f;
 	isActive = false;
-	sprite = CreateSprite( "./images/PNG/Lasers/laserRed01.png", BULLET_WIDTH, BULLET_HEIGHT, true );
+	sprite = CreateSprite( "./images/PNG/Lasers/laserRed01.png", BULLET_WIDTH, BULLET_HEIGHT );
 }
 
 EnemyBullet::~EnemyBullet()

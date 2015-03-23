@@ -29,8 +29,8 @@ void			RemoveInputListener();
 	//See GLAHEntity for more info
 	SDL_Texture* CreateSprite( const char* textureName_, //the filename/path of the sprite
 								int width_, int height_, //width and height in pixels
-								unsigned int parentSpriteID_ = 0, //sprite to parent to (0 if none)
-								Vector3 originOffset_ = Vector3(0.f,0.f,0.f), //rotation origin (bottom left by default)
+								SDL_Texture* parentSprite_ = nullptr, //sprite to parent to (nullptr if none)
+								Vector2 rotationOrigin_ = Vector2(0.f,0.f), //rotation origin (top left by default)
 								SColour colour_ = SColour(0xFF,0xFF,0xFF,0xFF)); //RGBA (white default)
 								
 

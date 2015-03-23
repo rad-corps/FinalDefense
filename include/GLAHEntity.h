@@ -7,10 +7,10 @@ struct GLAHEntity
 {
 	//SDL_Texture* spriteID;
 	//Matrix3x3 translation;
-	Vector3 position;
-	unsigned int parentSpriteID; //if null, no parent. 
+	Vector2 position;
+	SDL_Texture* parentSprite; //if null, no parent. 
 	Vector2 size; //x=width,y=height
-	Vector3 origin;
+	Vector2 origin;
 	float rotation;
 	float scaleX;
 	float scaleY;

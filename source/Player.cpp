@@ -76,7 +76,7 @@ Player::ReloadData()
 
 void Player::InitSprites()
 {
-	sprite = CreateSprite( "./images/PNG/playerShip1_blue.png", PLAYER_WIDTH, PLAYER_HEIGHT, true );
+	sprite = CreateSprite( "./images/PNG/playerShip1_blue.png", PLAYER_WIDTH, PLAYER_HEIGHT );
 	currentSprite = sprite;
 
 	for ( int i = 0; i < DEATH_ANIMATION_FRAMES; ++ i)
@@ -84,12 +84,12 @@ void Player::InitSprites()
 		string fileName = "./images/explosion/frame";
 		fileName += to_string(i+1);
 		fileName += "x.png";
-		deathAnimations[i] = CreateSprite( fileName.c_str(), 256, 256, true );
+		deathAnimations[i] = CreateSprite( fileName.c_str(), 256, 256 );
 	}
 
 
 	//create gun sprite
-	gun = CreateSprite("./images/PNG/Parts/gun01.png", 33 / 2, 17 / 2, true );
+	gun = CreateSprite("./images/PNG/Parts/gun01.png", 33 / 2, 17 / 2, sprite );
 
 	tableLoaded = true;
 }
@@ -187,7 +187,7 @@ Player::RotateShipAndWeapons()
 		float dirRadians = dir.GetAngle();
 		
 		//float targetRadians = GetRadiansFromVector(thrust);
-		float targetRadians = thrust.GetAngle();
+		float targetRadians = thrust.GetAngleYInverse();
 
 		if ( dirRadians < 0 ) dirRadians += 2 * M_PI;
 		if ( targetRadians < 0 ) targetRadians += 2 * M_PI;
@@ -197,14 +197,19 @@ Player::RotateShipAndWeapons()
 
 		if ( dirRadians > targetRadians )
 		{
-			acwDist = (2 * M_PI) - dirRadians + targetRadians;
-			cwDist = dirRadians - targetRadians;
+			acwDist =  dirRadians - targetRadians;
+			cwDist = (2 * M_PI) - dirRadians + targetRadians;
 		}
 		else if ( dirRadians <= targetRadians )
 		{
-			acwDist = targetRadians - dirRadians;
-			cwDist = (2 * M_PI) - targetRadians + dirRadians;
+			acwDist = (2 * M_PI) - targetRadians + dirRadians;
+			cwDist = targetRadians - dirRadians;
 		}
+
+		cout << "acwDist: " << acwDist << endl 
+			<< "cwDist: " << cwDist << endl 
+			<< "target radians: " << targetRadians << endl
+			<< "dirRadians: " << dirRadians << endl << endl;
 
 		const float ROTATION_TOLLERANCE = 0.2f;
 
@@ -212,15 +217,14 @@ Player::RotateShipAndWeapons()
 		if ( cwDist > acwDist ) //anticlockwisw
 		{
 			if ( (acwDist) > ROTATION_TOLLERANCE )
-				
-				RotateSprite(sprite, thrust.GetAngleYInverse());
+				RotateSpriteRelative(sprite, -0.1f);				
 			else
 				RotateSprite(sprite, thrust.GetAngleYInverse());
 		}
 		else 
 		{
 			if ( (cwDist) > ROTATION_TOLLERANCE )
-				RotateSprite(sprite, thrust.GetAngleYInverse());
+				RotateSpriteRelative(sprite, 0.1f);				
 			else
 				RotateSprite(sprite, thrust.GetAngleYInverse());
 		}
@@ -387,25 +391,25 @@ float Player::GetFireRate()
 	return ret;
 }
 
-void Player::SetGunPos()
-{	
-	//get normalised player direction
-	//Vector2 tempPos = dir.InverseY();
-	Vector2 tempPos = dir;
-	tempPos.Normalise();
-	//tempPos.SetMagnitude(14.0f);
-	
-	//gunPos.x = (pos.x + dir);
-	//gunPos.y = (pos.y + dir);
-
-	gunPos = pos;
-	gunPos.x += 10;
-
-	cout << "dir: " << dir << endl;
-	cout << "tempPos: " << tempPos << endl;
-	cout << "gunPos: " << gunPos << endl;
-
-}
+//void Player::SetGunPos()
+//{	
+//	//get normalised player direction
+//	//Vector2 tempPos = dir.InverseY();
+////	Vector2 tempPos = dir;
+////	tempPos.Normalise();
+//	//tempPos.SetMagnitude(14.0f);
+//	
+//	//gunPos.x = (pos.x + dir);
+//	//gunPos.y = (pos.y + dir);
+//
+////	gunPos = pos;
+////	gunPos.x += 10;
+//
+////	cout << "dir: " << dir << endl;
+////	cout << "tempPos: " << tempPos << endl;
+////	cout << "gunPos: " << gunPos << endl;
+//
+//}
 
 //Checks for and handles user input
 void Player::UpdatePlayer()
@@ -449,7 +453,7 @@ void Player::UpdatePlayer()
 		//}
 
 		HandleUserInput(); //movement and shooting
-		SetGunPos();
+		//SetGunPos();
 		CheckPlayerBounds(); // dont let the player go out of bounds
 	}
 	else //death animation
@@ -464,11 +468,13 @@ void Player::UpdatePlayer()
 
 void Player::Draw()
 {
+	Vector2 gunOffset(16,-35);
+
 	if  (!tableLoaded)
 		return;
 
-	MoveSprite( currentSprite, pos.x, pos.y );
-	MoveSprite( gun, gunPos.x, gunPos.y);	
+	MoveSprite( currentSprite, pos.x, pos.y );	
+	MoveSprite( gun, gunOffset.x, gunOffset.y);	
 	DrawSprite( currentSprite );				
 	
 	//gun was still appearing after death, bugfix. 

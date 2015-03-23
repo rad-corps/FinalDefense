@@ -89,7 +89,7 @@ private:
 	PLAYER_MOVEMENT_STATE movementState;
 	void SetThrust(Vector2 thrust);
 	void InitSprites();
-	void SetGunPos();
+	//void SetGunPos();
 	void AdjustEnginePitch();
 	//bool CheckCollision();
 	void CheckPlayerBounds();

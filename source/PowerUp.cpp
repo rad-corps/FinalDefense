@@ -40,8 +40,8 @@ PowerUp::PowerUp(const float& spawnTime, POWER_UP_TYPES powerUpType, ENEMY_SPAWN
 		spritePath1 = ANIM_1_POWER_UP_SPEED;
 		spritePath2 = ANIM_2_POWER_UP_SPEED;
 	}
-	spriteFrame1 = CreateSprite(spritePath1.c_str(), POWER_UP_WIDTH, POWER_UP_HEIGHT, true);
-	spriteFrame2 = CreateSprite(spritePath2.c_str(), POWER_UP_WIDTH, POWER_UP_HEIGHT, true);
+	spriteFrame1 = CreateSprite(spritePath1.c_str(), POWER_UP_WIDTH, POWER_UP_HEIGHT);
+	spriteFrame2 = CreateSprite(spritePath2.c_str(), POWER_UP_WIDTH, POWER_UP_HEIGHT);
 	currentSprite = spriteFrame1;
 }
 

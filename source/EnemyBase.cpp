@@ -46,7 +46,7 @@ EnemyBase::EnemyBase(const float& spawnTime, const int& health, const Vector2& p
 		string fileName = "./images/explosion/frame";
 		fileName += to_string(i+1);
 		fileName += "x.png";
-		deathAnimations[i] = CreateSprite( fileName.c_str(), 256, 256, true );
+		deathAnimations[i] = CreateSprite( fileName.c_str(), 256, 256 );
 	}
 }
 
