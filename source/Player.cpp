@@ -90,7 +90,7 @@ void Player::InitSprites()
 
 	//create gun sprite
 	//gun = CreateSprite("./images/PNG/Parts/gun01.png", 33 / 2, 17 / 2, sprite, Vector2(31,47/2) );
-	gun = CreateSprite("./images/PNG/Parts/gun01.png", 33, 17, sprite, Vector2(0,-PLAYER_HEIGHT/2 + 8.5) );
+	gun = CreateSprite("./images/PNG/Parts/gun01.png", 33, 17, sprite, Vector2(200,0) );
 
 	tableLoaded = true;
 }

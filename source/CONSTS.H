@@ -46,8 +46,8 @@ const float BG_Y_OFFSET2_SPEED = 0.6f;
 const int BG_Y_OFFSET3_SPEED = 20;
 
 //PLAYER CONSTS
-const int PLAYER_WIDTH = 47;
-const int PLAYER_HEIGHT = 62;
+const int PLAYER_WIDTH = 75;
+const int PLAYER_HEIGHT = 99;
 
 //ENEMY CONSTS
 //const float ENEMYSINE_WIDTH = 84 / 1.6f;
