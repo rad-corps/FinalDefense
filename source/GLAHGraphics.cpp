@@ -292,8 +292,8 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* orig
 		offset = entity.origin;
 		
 		//find xradius and yradius
-		int xRadius = (int)spriteList[entity.parentSprite].size.x / 2;
-		int yRadius = (int)spriteList[entity.parentSprite].size.y / 2;
+		float xRadius = (spriteList[entity.parentSprite].size.x  * spriteList[entity.parentSprite].scaleX) / 2;
+		float yRadius = (spriteList[entity.parentSprite].size.y  * spriteList[entity.parentSprite].scaleY) / 2;
 
 		//find centre of parent sprite
 		Vector2 parentCentre = parentPos;
@@ -306,7 +306,9 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* orig
 		//y = yRadius Sin A
 		offset.x = xRadius * sin(spriteList[entity.parentSprite].rotation);
 		offset.y = yRadius * cos(spriteList[entity.parentSprite].rotation);
-
+		cout << "xRadius: " << xRadius << endl;
+		cout << "yRadius: " << yRadius << endl;
+		cout << "offset: " << offset << endl;
 
 		offset += parentCentre;
 
@@ -320,7 +322,8 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* orig
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 	
-		SDL_RenderCopyEx( renderer, sprite_, &src, &dst, entity.rotation * 57.2957795f, nullptr, flip );
+		//SDL_RenderCopyEx( renderer, sprite_, &src, &dst, entity.rotation * 57.2957795f, nullptr, flip );
+		SDL_RenderCopyEx( renderer, sprite_, NULL, &dst, entity.rotation * 57.2957795f, nullptr, flip );
 	}
 	else
 	{
@@ -336,8 +339,6 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* orig
 		
 		SDL_RenderCopyEx( renderer, sprite_, &src, &dst, entity.rotation * 57.2957795f, nullptr, flip );
 	}
-
-
 }
 
 //GLAH::DrawSprite
