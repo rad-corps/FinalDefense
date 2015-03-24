@@ -90,7 +90,7 @@ void Player::InitSprites()
 
 	//create gun sprite
 	//gun = CreateSprite("./images/PNG/Parts/gun01.png", 33 / 2, 17 / 2, sprite, Vector2(31,47/2) );
-	gun = CreateSprite("./images/PNG/Parts/gun01.png", 33, 17, sprite, Vector2(0,0) );
+	gun = CreateSprite("./images/PNG/Parts/gun01.png", 33, 17, sprite, Vector2(-0.5f,-0.5f) );
 
 	tableLoaded = true;
 }
@@ -239,7 +239,7 @@ Player::RotateShipAndWeapons()
 	Vector2 shipDir = thrust;	
 	direction.Normalise();	
 	shipDir.Normalise();	
-	//RotateSprite(gun, direction.GetAngleYInverse());
+	RotateSprite(gun, direction.GetAngleYInverse());
 }
 
 void Player::SetThrust(Vector2 thrust)

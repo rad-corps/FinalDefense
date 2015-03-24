@@ -289,7 +289,7 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* orig
 	if ( entity.parentSprite != nullptr ) 
 	{
 		parentPos = spriteList[entity.parentSprite].position;
-		offset = entity.origin;
+		//offset = entity.origin;
 		
 		//find xradius and yradius
 		float xRadius = (spriteList[entity.parentSprite].size.x  * spriteList[entity.parentSprite].scaleX) / 2;
@@ -300,20 +300,37 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* orig
 		parentCentre.x += xRadius;
 		parentCentre.y -= yRadius;
 
+		//multiply the rotation position
+		xRadius *= entity.origin.x;
+		yRadius *= entity.origin.y;
+		
 		//find difference between sprite radius and offset.... TODO
 
 		//x = xRadius Cos A
 		//y = yRadius Sin A
 		offset.x = xRadius * sin(spriteList[entity.parentSprite].rotation);
 		offset.y = yRadius * cos(spriteList[entity.parentSprite].rotation);
-		cout << "xRadius: " << xRadius << endl;
-		cout << "yRadius: " << yRadius << endl;
-		cout << "offset: " << offset << endl;
+
+
+		//cout << "xRadius: " << xRadius << endl;
+		//cout << "yRadius: " << yRadius << endl;
+		//cout << "offset: " << offset << endl;
 
 		offset += parentCentre;
 
+		float xSize = entity.size.x * entity.scaleX;
+		float ySize = entity.size.y * entity.scaleY;
+
+		cout << "parent pos    " << parentPos << endl;
+		cout << "parent centre " << parentCentre << endl;
+		cout << "offset        " << offset << endl ;
+		cout << "xSize         " << xSize << endl ;
+		cout << "ySize         " << ySize << endl <<endl;
+		
+		
 		SDL_Rect src = { 0, 0, entity.size.x, entity.size.y};
-		SDL_Rect dst = { offset.x, 768 - offset.y, entity.size.x * entity.scaleX, entity.size.y * entity.scaleY };
+		SDL_Rect dst = { offset.x - (xSize / 2), 768 - offset.y - (ySize / 2), xSize, ySize };
+		//SDL_Rect dst = { offset.x , 768 - offset.y , xSize, ySize };
 
 		//flipping horizontally?
 		SDL_RendererFlip flip = SDL_FLIP_NONE;
@@ -327,8 +344,11 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* orig
 	}
 	else
 	{
+		float xSize = entity.size.x * entity.scaleX;
+		float ySize = entity.size.y * entity.scaleY;
 		SDL_Rect src = { 0, 0, entity.size.x, entity.size.y};
-		SDL_Rect dst = { entity.position.x + parentPos.x + offset.x, 768 - entity.position.y - parentPos.y - offset.y, entity.size.x * entity.scaleX, entity.size.y * entity.scaleY };
+		//SDL_Rect dst = { entity.position.x - (xSize / 2), 768 - entity.position.y + (ySize / 2), xSize, ySize };
+		SDL_Rect dst = { entity.position.x , 768 - entity.position.y , xSize, ySize };
 
 		//flipping horizontally?
 		SDL_RendererFlip flip = SDL_FLIP_NONE;
@@ -337,7 +357,7 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* orig
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 		
-		SDL_RenderCopyEx( renderer, sprite_, &src, &dst, entity.rotation * 57.2957795f, nullptr, flip );
+		SDL_RenderCopyEx( renderer, sprite_, NULL, &dst, entity.rotation * 57.2957795f, nullptr, flip );
 	}
 }
 
