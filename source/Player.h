@@ -145,7 +145,7 @@ private:
 	SDL_Texture* deathAnimations[7];
 	SDL_Texture* currentSprite;
 	//unsigned int hudLives[MAX_LIVES]; //5 is max num of lives
-	SDL_Texture* gun;
+	std::vector<SDL_Texture*> gun;
 
 	//SOUNDS
 	// vector<HSTREAM> comboSounds;

@@ -300,16 +300,26 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* orig
 		parentCentre.x += xRadius;
 		parentCentre.y -= yRadius;
 
+
+		//origin.x == the angle at which the child will live in the parents rotation
+		//origin.y == the distance along that angle the child will live
 		//multiply the rotation position
-		xRadius *= entity.origin.x;
-		yRadius *= entity.origin.y;
+		float child_angle = entity.origin.x;
+		float child_offset_from_centre = entity.origin.y;
+		
+		//xRadius *= entity.origin.x;
+		//yRadius *= entity.origin.y;
 		
 		//find difference between sprite radius and offset.... TODO
 
 		//x = xRadius Cos A
 		//y = yRadius Sin A
-		offset.x = xRadius * sin(spriteList[entity.parentSprite].rotation);
-		offset.y = yRadius * cos(spriteList[entity.parentSprite].rotation);
+		
+		offset.x = child_offset_from_centre * sin(spriteList[entity.parentSprite].rotation + child_angle);
+		offset.y = child_offset_from_centre * cos(spriteList[entity.parentSprite].rotation + child_angle);
+		
+		//offset.x = xRadius * sin(spriteList[entity.parentSprite].rotation);
+		//offset.y = yRadius * cos(spriteList[entity.parentSprite].rotation);
 
 
 		//cout << "xRadius: " << xRadius << endl;
