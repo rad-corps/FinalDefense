@@ -331,11 +331,11 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* orig
 		float xSize = entity.size.x * entity.scaleX;
 		float ySize = entity.size.y * entity.scaleY;
 
-		cout << "parent pos    " << parentPos << endl;
-		cout << "parent centre " << parentCentre << endl;
-		cout << "offset        " << offset << endl ;
-		cout << "xSize         " << xSize << endl ;
-		cout << "ySize         " << ySize << endl <<endl;
+		//cout << "parent pos    " << parentPos << endl;
+		//cout << "parent centre " << parentCentre << endl;
+		//cout << "offset        " << offset << endl ;
+		//cout << "xSize         " << xSize << endl ;
+		//cout << "ySize         " << ySize << endl <<endl;
 		
 		
 		SDL_Rect src = { 0, 0, entity.size.x, entity.size.y};

@@ -209,10 +209,10 @@ Player::RotateShipAndWeapons()
 			cwDist = targetRadians - dirRadians;
 		}
 
-		cout << "acwDist: " << acwDist << endl 
-			<< "cwDist: " << cwDist << endl 
-			<< "target radians: " << targetRadians << endl
-			<< "dirRadians: " << dirRadians << endl << endl;
+		//cout << "acwDist: " << acwDist << endl 
+		//	<< "cwDist: " << cwDist << endl 
+		//	<< "target radians: " << targetRadians << endl
+		//	<< "dirRadians: " << dirRadians << endl << endl;
 
 		const float ROTATION_TOLLERANCE = 0.2f;
 
