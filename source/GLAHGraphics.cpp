@@ -279,65 +279,22 @@ int Initialise(int a_iWidth, int a_iHeight, bool a_bFullscreen, const char* a_pW
 //GLAH::DrawSprite ( unsigned int spriteID_)
 void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* origin_)
 {
-	//Render texture to screen
+	//get information about the sprite
 	GLAHEntity entity = spriteList[sprite_];
 	
 	Vector2 parentPos(0.0f,0.0f);
 	Vector2 offset(0.0f,0.0f);
 	SDL_Rect src, dst;
+	
 	//get parent position and rotation
 	if ( entity.parentSprite != nullptr ) 
 	{
-		parentPos = spriteList[entity.parentSprite].position;
-		//offset = entity.origin;
-		
-		//find xradius and yradius
-		float xRadius = (spriteList[entity.parentSprite].size.x  * spriteList[entity.parentSprite].scaleX) / 2;
-		float yRadius = (spriteList[entity.parentSprite].size.y  * spriteList[entity.parentSprite].scaleY) / 2;
-
-		//find centre of parent sprite
-		Vector2 parentCentre = parentPos;
-		parentCentre.x += xRadius;
-		parentCentre.y -= yRadius;
-
-
-		//origin.x == the angle at which the child will live in the parents rotation
-		//origin.y == the distance along that angle the child will live
-		//multiply the rotation position
-		float child_angle = entity.origin.x;
-		float child_offset_from_centre = entity.origin.y;
-		
-		//xRadius *= entity.origin.x;
-		//yRadius *= entity.origin.y;
-		
-		//find difference between sprite radius and offset.... TODO
-
-		//x = xRadius Cos A
-		//y = yRadius Sin A
-		
-		offset.x = child_offset_from_centre * sin(spriteList[entity.parentSprite].rotation + child_angle);
-		offset.y = child_offset_from_centre * cos(spriteList[entity.parentSprite].rotation + child_angle);
-		
-		//offset.x = xRadius * sin(spriteList[entity.parentSprite].rotation);
-		//offset.y = yRadius * cos(spriteList[entity.parentSprite].rotation);
-
-
-		//cout << "xRadius: " << xRadius << endl;
-		//cout << "yRadius: " << yRadius << endl;
-		//cout << "offset: " << offset << endl;
-
-		offset += parentCentre;
+		offset = GetGLAHChildCentrePosition(sprite_);
 
 		float xSize = entity.size.x * entity.scaleX;
 		float ySize = entity.size.y * entity.scaleY;
-
-		//cout << "parent pos    " << parentPos << endl;
-		//cout << "parent centre " << parentCentre << endl;
-		//cout << "offset        " << offset << endl ;
-		//cout << "xSize         " << xSize << endl ;
-		//cout << "ySize         " << ySize << endl <<endl;
-		
-		
+				
+		//TODO Find all 768 and change to a screen height variable 
 		SDL_Rect src = { 0, 0, entity.size.x, entity.size.y};
 		SDL_Rect dst = { offset.x - (xSize / 2), 768 - offset.y - (ySize / 2), xSize, ySize };
 		//SDL_Rect dst = { offset.x , 768 - offset.y , xSize, ySize };
@@ -404,6 +361,39 @@ void RotateSprite(SDL_Texture* sprite_, float rotation_ )
 GLAHEntity GetGLAHEntity(SDL_Texture* sprite_)
 {
 	return spriteList[sprite_];
+}
+
+Vector2			GetGLAHChildCentrePosition	(SDL_Texture* spriteID_)
+{
+	Vector2 pos(0.0f,0.0f);
+
+	GLAHEntity child = spriteList[spriteID_];
+
+	if ( child.parentSprite != nullptr )
+	{
+		//get the parents position (currently drawn from top left)
+		Vector2 parentPos = spriteList[child.parentSprite].position;
+		
+		//find xradius and yradius of parent sprite
+		float xRadius = (spriteList[child.parentSprite].size.x  * spriteList[child.parentSprite].scaleX) / 2;
+		float yRadius = (spriteList[child.parentSprite].size.y  * spriteList[child.parentSprite].scaleY) / 2;
+
+		//find centre of parent sprite TODO this should be stored at time of creation based on position and rotation point
+		Vector2 parentCentre = parentPos;
+		parentCentre.x += xRadius;
+		parentCentre.y -= yRadius;
+
+		//get the angle and the offset from centre
+		float child_angle = child.origin.x;
+		float child_offset_from_centre = child.origin.y;
+		
+		//find difference between sprite radius and offset	
+		pos.x = child_offset_from_centre * sin(spriteList[child.parentSprite].rotation + child_angle);
+		pos.y = child_offset_from_centre * cos(spriteList[child.parentSprite].rotation + child_angle);
+		pos += parentCentre;
+	}
+
+	return pos;
 }
 
 void SetSpriteUVCoordinates	( SDL_Texture* sprite_, float* UVVec4_ )

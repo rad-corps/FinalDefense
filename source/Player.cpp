@@ -170,11 +170,15 @@ void Player::Shoot()
 	//play sound
 //	BASS_ChannelPlay(soundShot, true);
 	Vector2 gunDir, tempPos;
+	Vector2 gunPos = GetGLAHChildCentrePosition(gun[0]);
+
+	cout << "gunPos " << gunPos << endl;
+
 	tempPos.SetAngle(GetGLAHEntity(gun[0]).rotation);
 	//GetSpriteAngleVector(gun, gunDir);
 	//tempPos = gunDir;
-	tempPos.SetMagnitude(40.f);
-	GetInactiveBullet().InitialiseBullet(gunPos.x + tempPos.x, gunPos.y + tempPos.y, gunDir);
+	//tempPos.SetMagnitude(40.f);
+	GetInactiveBullet().InitialiseBullet(gunPos.x + tempPos.x, gunPos.y + tempPos.y, tempPos.InverseY());
 	currentReloadBulletTime = 0.0f;
 	shotsFired++;
 }

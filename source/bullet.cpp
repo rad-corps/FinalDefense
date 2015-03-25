@@ -66,7 +66,7 @@ void
 Bullet::InitialiseBullet(float x, float y, Vector2 dir)
 {
 	this->dir = dir;
-	RotateSprite(sprite, dir.GetAngle());
+	RotateSprite(sprite, dir.InverseY().GetAngle());
 	this->x = x;
 	this->y = y;
 

@@ -109,7 +109,7 @@ private:
 
 	//player position and physics
 	Vector2 pos;
-	Vector2 gunPos;
+	//Vector2 gunPos;
 	Vector2 dir;
 	Vector2 thrust;
 	Vector2 velocity;

@@ -54,6 +54,9 @@ void			RemoveInputListener();
 	//Get information about the sprite based on spriteID_ 
 	GLAHEntity		GetGLAHEntity			(SDL_Texture* spriteID_);
 
+	//Get position of a GLAH Entity (useful for child sprites who have misleading position info in their GLAHEntity class)
+	Vector2			GetGLAHChildCentrePosition	(SDL_Texture* spriteID_);
+
 	//Scale sprite (both x and y scaled by scalar_)
 //	void			ScaleSprite				( unsigned int spriteID_, float scalar_ );
 	void			ScaleSprite				( SDL_Texture*, float scalarX_, float scalarY_ );
