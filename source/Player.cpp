@@ -91,6 +91,7 @@ void Player::InitSprites()
 	//create gun sprite
 	//gun = CreateSprite("./images/PNG/Parts/gun01.png", 33 / 2, 17 / 2, sprite, Vector2(31,47/2) );
 	gun.push_back(CreateSprite("./images/PNG/Parts/gun01.png", 33, 17, sprite, Vector2((3.14f / 2) * 3,25.f) )); //main gun
+	
 	gun.push_back(CreateSprite("./images/PNG/Parts/gun01.png", 33, 17, sprite, Vector2(3.14f,30.f) )); //left wing
 	gun.push_back(CreateSprite("./images/PNG/Parts/gun01.png", 33, 17, sprite, Vector2(3.14f * 2,30.f) )); //right wing
 
@@ -169,18 +170,49 @@ void Player::Shoot()
 {
 	//play sound
 //	BASS_ChannelPlay(soundShot, true);
-	Vector2 gunDir, tempPos;
-	Vector2 gunPos = GetGLAHChildCentrePosition(gun[0]);
+	{
+		Vector2 gunDir, bulletOffset;
+		Vector2 gunPos = GetGLAHChildCentrePosition(gun[0]);
 
-	cout << "gunPos " << gunPos << endl;
+		gunDir.SetAngle(GetGLAHEntity(gun[0]).rotation);
+		gunDir = gunDir.InverseY();
+		bulletOffset = gunDir;
+		bulletOffset.SetMagnitude(40.0f);
+	
+		//GetInactiveBullet().InitialiseBullet(gunPos.x + bulletOffset.x, gunPos.y + bulletOffset.y, gunDir);
+		GetInactiveBullet().InitialiseBullet(gunPos.x, gunPos.y , gunDir);
+		currentReloadBulletTime = 0.0f;
+		shotsFired++;
+	}
+	{
+		Vector2 gunDir, bulletOffset;
+		Vector2 gunPos = GetGLAHChildCentrePosition(gun[1]);
 
-	tempPos.SetAngle(GetGLAHEntity(gun[0]).rotation);
-	//GetSpriteAngleVector(gun, gunDir);
-	//tempPos = gunDir;
-	//tempPos.SetMagnitude(40.f);
-	GetInactiveBullet().InitialiseBullet(gunPos.x + tempPos.x, gunPos.y + tempPos.y, tempPos.InverseY());
-	currentReloadBulletTime = 0.0f;
-	shotsFired++;
+		gunDir.SetAngle(GetGLAHEntity(gun[1]).rotation);
+		gunDir = gunDir.InverseY();
+		bulletOffset = gunDir;
+		bulletOffset.SetMagnitude(40.0f);
+	
+		//GetInactiveBullet().InitialiseBullet(gunPos.x + bulletOffset.x, gunPos.y + bulletOffset.y, gunDir);
+		GetInactiveBullet().InitialiseBullet(gunPos.x, gunPos.y , gunDir);
+		currentReloadBulletTime = 0.0f;
+		shotsFired++;
+	}
+
+	{
+		Vector2 gunDir, bulletOffset;
+		Vector2 gunPos = GetGLAHChildCentrePosition(gun[2]);
+
+		gunDir.SetAngle(GetGLAHEntity(gun[2]).rotation);
+		gunDir = gunDir.InverseY();
+		bulletOffset = gunDir;
+		bulletOffset.SetMagnitude(40.0f);
+	
+		//GetInactiveBullet().InitialiseBullet(gunPos.x + bulletOffset.x, gunPos.y + bulletOffset.y, gunDir);
+		GetInactiveBullet().InitialiseBullet(gunPos.x, gunPos.y , gunDir);
+		currentReloadBulletTime = 0.0f;
+		shotsFired++;
+	}
 }
 
 void 
@@ -399,26 +431,6 @@ float Player::GetFireRate()
 
 	return ret;
 }
-
-//void Player::SetGunPos()
-//{	
-//	//get normalised player direction
-//	//Vector2 tempPos = dir.InverseY();
-////	Vector2 tempPos = dir;
-////	tempPos.Normalise();
-//	//tempPos.SetMagnitude(14.0f);
-//	
-//	//gunPos.x = (pos.x + dir);
-//	//gunPos.y = (pos.y + dir);
-//
-////	gunPos = pos;
-////	gunPos.x += 10;
-//
-////	cout << "dir: " << dir << endl;
-////	cout << "tempPos: " << tempPos << endl;
-////	cout << "gunPos: " << gunPos << endl;
-//
-//}
 
 //Checks for and handles user input
 void Player::UpdatePlayer()

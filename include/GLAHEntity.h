@@ -10,7 +10,7 @@ struct GLAHEntity
 	Vector2 position;
 	SDL_Texture* parentSprite; //if null, no parent. 
 	Vector2 size; //x=width,y=height
-	Vector2 origin;
+	Vector2 childOffsetInfo;
 	float rotation;
 	float scaleX;
 	float scaleY;
@@ -23,5 +23,6 @@ struct GLAHEntity
 		UV[1] = 0;
 		UV[2] = 1;
 		UV[3] = 1;
+		parentSprite = nullptr;
 	}
 };

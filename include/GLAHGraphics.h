@@ -27,11 +27,13 @@ void			RemoveInputListener();
 	//create a sprite (returns a spriteID)
 	//This also creates a GLAHEntity that maps to the sprite ID
 	//See GLAHEntity for more info
+ //TODO also set drawFromCentre = true
 	SDL_Texture* CreateSprite( const char* textureName_, //the filename/path of the sprite
 								int width_, int height_, //width and height in pixels
 								SDL_Texture* parentSprite_ = nullptr, //sprite to parent to (nullptr if none)
-								Vector2 rotationOrigin_ = Vector2(0.f,0.f), //rotation origin (top left by default)
+								Vector2 childOffsetInfo_ = Vector2(0.f,0.f), //x=child pos based on parent rot, y=distance from parent centre
 								SColour colour_ = SColour(0xFF,0xFF,0xFF,0xFF)); //RGBA (white default)
+	
 								
 
 	//Move the sprite in world space to the absolute coordinate xPos_, yPos_

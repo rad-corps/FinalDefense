@@ -8,6 +8,7 @@ Bullet::Bullet()
 	missed = false;
 	
 	//TODO Draw from centre
+
 	sprite = CreateSprite( "./images/PNG/Lasers/laserBlue01.png", BULLET_WIDTH, BULLET_HEIGHT);
 }
 
@@ -35,8 +36,12 @@ Bullet::Draw()
 {
 	if (isActive)
 	{
+		SDL_Point origin;
+		origin.x = 0;
+		origin.y = 4;
+
 		MoveSprite(sprite, x, y);
-		DrawSprite(sprite);
+		DrawSprite(sprite, false, 1.0f, &origin);
 	}
 }
 

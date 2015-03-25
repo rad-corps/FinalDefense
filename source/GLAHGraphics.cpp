@@ -75,7 +75,7 @@ SDL_Window*		GetWindow()
 SDL_Texture* CreateSprite	( const char* textureName_, 
 									 int width_, int height_, 
 									 SDL_Texture* parentSprite_, 
-									 Vector2 rotationOrigin_, 
+									 Vector2 childOffsetInfo_, 
 									 SColour colour_ )
  {
     //The final texture
@@ -113,7 +113,7 @@ SDL_Texture* CreateSprite	( const char* textureName_,
 	//cout << "scalex: " << glahEntity.scaleX << "\t scaley: " << glahEntity.scaleY << endl;
 	//glahEntity.spriteID = newTexture;
 	//glahEntity.position = Vector3((float)x_, (float)y_, 1.f);
-	glahEntity.origin = rotationOrigin_;
+	glahEntity.childOffsetInfo = childOffsetInfo_;
 
 	//add to the spriteList (map) using the texture_handle as the key
 	spriteList[newTexture] = glahEntity;
@@ -279,6 +279,7 @@ int Initialise(int a_iWidth, int a_iHeight, bool a_bFullscreen, const char* a_pW
 //GLAH::DrawSprite ( unsigned int spriteID_)
 void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* origin_)
 {
+
 	//get information about the sprite
 	GLAHEntity entity = spriteList[sprite_];
 	
@@ -324,7 +325,7 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, SDL_Point* orig
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 		
-		SDL_RenderCopyEx( renderer, sprite_, NULL, &dst, entity.rotation * 57.2957795f, nullptr, flip );
+		SDL_RenderCopyEx( renderer, sprite_, NULL, &dst, entity.rotation * 57.2957795f, origin_, flip );
 	}
 }
 
@@ -384,8 +385,8 @@ Vector2			GetGLAHChildCentrePosition	(SDL_Texture* spriteID_)
 		parentCentre.y -= yRadius;
 
 		//get the angle and the offset from centre
-		float child_angle = child.origin.x;
-		float child_offset_from_centre = child.origin.y;
+		float child_angle = child.childOffsetInfo.x;
+		float child_offset_from_centre = child.childOffsetInfo.y;
 		
 		//find difference between sprite radius and offset	
 		pos.x = child_offset_from_centre * sin(spriteList[child.parentSprite].rotation + child_angle);

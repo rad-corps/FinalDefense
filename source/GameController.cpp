@@ -209,7 +209,6 @@ GameController::UpdateGameState()
 	//HACK: TODO FIX
 	if ( currentLevel.get() == nullptr )
 	{
-		//TODO Commented out for testing.
 		currentLevel->CreateNextWave();
 	}
 
@@ -257,11 +256,11 @@ GameController::UpdateGameState()
 
 	while ( fixedUpdateTimer > UPDATE_INTERVAL )
 	{
+		//TESTING: comment out waveEnd = to not progress levels
 		//current level controls the enemies, background, power ups
-		if ( currentState == GAMEPLAY )
-			//todo comment waveEnd back in
-			currentLevel->Update(player->Alive());
-			//waveEnd = currentLevel->Update(player->Alive());
+		if ( currentState == GAMEPLAY )			
+//			currentLevel->Update(player->Alive());
+			waveEnd = currentLevel->Update(player->Alive());
 
 		//If we are at the end of a wave
 		if ( waveEnd  )
